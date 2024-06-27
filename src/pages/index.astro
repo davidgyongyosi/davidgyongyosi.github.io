@@ -1,14 +1,37 @@
 ---
+import { Image } from "astro:assets";
 import MainLayout from "../layouts/MainLayout.astro";
+import heroImage from "../assets/hero.png";
 
 
 ---
 
 <MainLayout title="Home">
-	<div>
-		<h1>I am an enthusiastic web developer.</h1>
-		<p>Currently working as a Frontend Developer.</p>
-	
-		<button>Contact me</button>
+	<div class="flex flex-row justify-around p-16">
+		<div class="flex flex-col gap-6">
+			<div>
+				<h1 class="text-3xl">I am an <span>enthusiastic</span> web developer.</h1>
+				<p class="text-lg text-slate-400">Currently working as a Frontend Developer.</p>
+			</div>
+			<a href="mailto:david.gyongyosi@majin.dev" class="btn">Contact me !!</a>
+		</div>
+		<div>
+			<Image src={heroImage} alt="hero image" class="border-b-2 border-slate-500" width={300} height={300} />
+		</div>
 	</div>
 </MainLayout>
+
+<style>
+  span {
+	color: #8957f6;
+  }
+
+  .btn {
+	background-color: transparent;
+	border: 1px solid #8957f6;
+	color: #8957f6;
+	transition: all 0.2s ease-in-out;
+	width: fit-content;
+	padding: 0.3rem 1rem;
+  }
+</style>
