@@ -17,10 +17,26 @@
     font-family: "Ubuntu Sans Mono", monospace;
   }
 
-  body, html {
+  html {
     background-color: #17141c;
+  }
+
+
+  body, html {
     color: white;
     font-family: "Ubuntu Sans Mono", monospace;
+  }
+
+  body::before {
+    content: "";
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    background: linear-gradient(90deg,rgb(56, 56, 56) 1px,transparent 1px) 0 0 / 100px 100px, linear-gradient(rgb(56, 56, 56) 1px,transparent 1px) 0 0 / 100px 100px;
+    top: 0;
+    z-index: -1;
+    -webkit-mask: linear-gradient(-360deg,transparent 40%,white);
+    mask: linear-gradient(-360deg,transparent 30%,white);
   }
 
   .heading-prefix {

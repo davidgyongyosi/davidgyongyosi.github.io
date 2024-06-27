@@ -1,75 +1,141 @@
 ---
-const {title} = Astro.props;
-import '../styles/global.css';
+const { title } = Astro.props;
+import "../styles/global.css";
 ---
+
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <script src="https://kit.fontawesome.com/c34400693d.js" crossorigin="anonymous"></script>
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Portfolio - {title}</title>
-	</head>
-	<body>
-        <div class="w-screen h-screen flex flex-col">
-            <nav class="flex flex-row w-full justify-between items-center pl-16 pr-16 pt-7">
-              <h2 class="flex-1 logo">David Gyongyosi</h2>
-              <ul class="flex-1 flex flex-row gap-3 justify-between items-center w-full text-lg tracking-wide">
-                <li><a href="majin.dev/" class="nav-link"><span class="heading-prefix">#</span>home</a></li>
-                <li><a href="majin.dev/works" class="nav-link"><span class="heading-prefix">#</span>works</a></li>
-                <li><a href="majin.dev/about" class="nav-link"><span class="heading-prefix">#</span>about</a></li>
-                <li><a href="majin.dev/contact" class="nav-link"><span class="heading-prefix">#</span>contact-me</a></li>
-              </ul>
-            </nav>
-            <main class="top-0 flex-grow p-4">
-                <slot />
-                <div class="divider" role="separator" aria-label="Divider"></div>
-            </main>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script
+      src="https://kit.fontawesome.com/c34400693d.js"
+      crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Portfolio - {title}</title>
+  </head>
+  <body>
+    <div class="w-screen h-screen flex flex-col">
+      <nav
+        class="flex flex-row w-full justify-between items-center pl-16 pr-16 pt-7 pb-4 sticky top-0"
+      >
+        <h2 class="flex-1">David Gyongyosi</h2>
+        <ul
+          class="flex-1 flex flex-row gap-3 justify-between items-center w-full text-lg tracking-wide"
+        >
+          <li>
+            <a href="/" class="nav-link"
+              ><span class="heading-prefix">#</span>home</a>
+          </li>
+          <li>
+            <a href="/works/" class="nav-link"
+              ><span class="heading-prefix">#</span>works</a>
+          </li>
+          <li>
+            <a href="/about/" class="nav-link"
+              ><span class="heading-prefix">#</span>about</a>
+          </li>
+          <li>
+            <a href="/contact/" class="nav-link"
+              ><span class="heading-prefix">#</span>contacts</a>
+          </li>
+        </ul>
+      </nav>
+      <main class="top-0 flex-grow p-4">
+        <slot />
+      </main>
+      <footer
+        class="p-8 border-t-2 border-slate-400 flex flex-col items-center"
+      >
+        <div class="w-full flex justify-between pl-16 pr-16">
+          <div>
+            <div class="flex items-center gap-5">
+              <h3 class="text-lg">David Gyongyosi</h3>
+              <p class="text-slate-500">david.gyongyosi@majin.dev</p>
             </div>
-        
-	</body>
+            <p class="text-sm">Frontend Developer and tech enthusiast</p>
+          </div>
+          <div>
+            <h3 class="text-lg">Media</h3>
+            <ul class="flex gap-2">
+              <li class="text-lg">
+                <a
+                  href="https://github.com/davidgyongyosi"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  ><i class="fa-brands fa-github fa-icons"></i></a>
+              </li>
+              <li class="text-lg">
+                <a
+                  href="https://www.facebook.com/david.gyongyosi88"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  ><i class="fa-brands fa-facebook fa-icons"></i></a>
+              </li>
+              <li class="text-lg">
+                <a
+                  href="https://www.linkedin.com/in/davidgyongyosi/"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  ><i class="fa-brands fa-linkedin fa-icons"></i></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <p class="text-sm text-slate-500">
+          &copy; Copyright 2024. Made by <a
+            href="https://github.com/davidgyongyosi"
+            target="_blank"
+            rel="noreferrer noopener">David Gyongyosi</a
+          >.
+        </p>
+      </footer>
+    </div>
+  </body>
 </html>
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const currentPath = window.location.pathname;
-        const links = document.querySelectorAll('.nav-link');
+  document.addEventListener("DOMContentLoaded", () => {
+    const currentPath = window.location.pathname;
+    const links = document.querySelectorAll(".nav-link");
 
-        links.forEach(link => {
-            if (link.getAttribute('href') === currentPath) {
-                link.classList.add('active');
-            }
-        });
+    links.forEach((link) => {
+      if (link.getAttribute("href") === currentPath) {
+        link.classList.add("active");
+      }
     });
+  });
 </script>
 
 <style lang="scss">
-    h2 {
+  h2 {
     font-size: 1.5rem;
     font-weight: 500;
     line-height: 100%;
     margin: 0;
-    color: #8957F6;
+    color: #8957f6;
   }
 
-  li {
-    color: #717681;
-    cursor: pointer;
-    font-size: 1.2rem;
-    
-    color: transparent;
-    background-image: linear-gradient(90deg, #8957F6 50%, #717681 50%);
-    background-position:100%;
-    background-size:200% 100%;
-    background-clip:text;
-    -webkit-background-clip:text;
-  
-    transition: background-position 0.2s linear;
-  
-    &:hover:not(.active) {
-      background-position:0;
+  nav {
+    background-color: #17141c;
 
+    li {
+      color: #717681;
+      cursor: pointer;
+      font-size: 1.2rem;
+
+      color: transparent;
+      background-image: linear-gradient(90deg, #8957f6 50%, #717681 50%);
+      background-position: 100%;
+      background-size: 200% 100%;
+      background-clip: text;
+      -webkit-background-clip: text;
+
+      transition: background-position 0.2s linear;
+
+      &:hover:not(.active) {
+        background-position: 0;
+      }
     }
   }
 
