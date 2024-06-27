@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Sans+Mono:ital,wght@0,400..700;1,400..700&display=swap');
+
+:host {
+    --primary : #8957F6;
+    --primary-light : #EA76F8;
+    --background : #17141c;
+
+    font-family: "Ubuntu Sans Mono", monospace;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: white;
+  }
+
+  :root, * {
+    color: white;
+    font-family: "Ubuntu Sans Mono", monospace;
+  }
+
+  body, html {
+    background-color: #17141c;
+    color: white;
+    font-family: "Ubuntu Sans Mono", monospace;
+  }
+
+  .heading-prefix {
+    color: #8957F6;
+    font-weight: 400;
+    padding: 0.15rem;
+  }
+
+  
+  .fa-icons {
+    color: #8957F6 !important;
+    padding-right: 4px;
+  }
