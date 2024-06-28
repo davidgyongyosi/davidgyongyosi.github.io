@@ -1,0 +1,82 @@
+---
+// ProjectCard.astro
+export interface Props {
+  title: string;
+  description: string;
+  link: string;
+  linkText: string;
+  tags: string[];
+}
+
+const { title, description, link, linkText, tags } = Astro.props;
+---
+
+<div class="project-card">
+  <div class="tags">
+    {tags.map(tag => (
+      <span class="tag">{tag}</span>
+    ))}
+  </div>
+  <h3>{title}</h3>
+  <p>{description}</p>
+  <a href={link} class="button">{linkText}</a>
+</div>
+
+<style lang="scss">
+  .project-card {
+    background-color: #2d2d2d;
+    border: 1px solid #3d3d3d;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 0.5rem;
+    color: #fff;
+    max-width: 300px;
+
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      background-color: #3d3d3d;
+    }
+  }
+
+  .tags {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .tag {
+    background-color: #444;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #fff;
+  }
+
+  p {
+    color: #aaa;
+    font-size: 1rem;
+    margin: 0.5rem 0 1rem;
+  }
+
+  .button {
+    background-color: transparent;
+    border: 1px solid #8957f6;
+    color: #8957f6;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+    display: inline-block;
+
+    &:hover {
+	  background-color: #8957f6;
+	  color: black;
+	}
+  }
+
+</style>

@@ -1,7 +1,141 @@
 ---
+import ProjectCard from "../components/ProjectCard.astro";
 import MainLayout from "../layouts/MainLayout.astro";
 ---
 
 <MainLayout title="Works">
-	<h1>Works</h1>
+	<div class="p-32">
+		<section class="pb-12">
+			<h1 class="text-3xl">
+				<span class="heading-prefix">/</span>projects 
+			  </h1>
+			<div class="flex justify-between gap-6 items-center pt-10 pb-10">
+			  <div class="flex gap-6 items-center flex-grow">
+				<h1 class="text-2xl">
+				  <span class="heading-prefix">#</span>large-projects
+				</h1>
+				<hr class="w-1/2" />
+			  </div>
+			</div>
+			<div class="flex flex-wrap gap-5">
+				<ProjectCard
+				title="Bot boilerplate"
+				description="Start creating scalable discord.js bot with typescript in seconds"
+				link="https://github.com"
+				linkText="Github"
+				tags={["Discord.js", "TS", "JS"]}
+			  />
+			  <ProjectCard
+				title="My blog"
+				description="Front-end of my future blog website written in vue"
+				link="https://github.com"
+				linkText="Github"
+				tags={["Vue", "CSS", "JS"]}
+			  />
+			  <ProjectCard
+				title="Crash protect website"
+				description="Figma template for website about anti-raid, anti-crash discord bot"
+				link="https://figma.com"
+				linkText="Figma"
+				tags={["Figma"]}
+			  />
+			  <ProjectCard
+				title="CSS experiments"
+				description="Collection of my different little projects in CSS"
+				link="https://live.com"
+				linkText="Live"
+				tags={["HTML", "CSS"]}
+			  />
+			  <ProjectCard
+				title="Web Dev Config"
+				description="Config for web development in Lua NeoVim"
+				link="https://github.com"
+				linkText="Github"
+				tags={["Lua", "NeoVim"]}
+			  />
+			  </div>
+		</section>
+		
+		<section class="pb-12">
+			<div class="flex justify-between gap-6 items-center pt-10 pb-10">
+				<div class="flex gap-6 items-center flex-grow">
+				  <h1 class="text-2xl">
+					<span class="heading-prefix">#</span>small-projects
+				  </h1>
+				  <hr class="w-1/2" />
+				</div>
+			  </div>
+			  <div class="flex flex-wrap gap-5">
+				<ProjectCard
+					title="My portfolio"
+					description="My personal website built with Astro"
+					link="https://github.com"
+					linkText="Github"
+					tags={["Astro", "CSS", "JS"]}
+				  />
+				<ProjectCard
+					title="My blog"
+					description="My personal blog built with Astro"
+					link="https://github.com"
+					linkText="Github"
+					tags={["Astro", "CSS", "JS"]}
+				  />
+				<ProjectCard
+					title="My blog"
+					description="My personal blog built with Astro"
+					link="https://github.com"
+					linkText="Github"
+					tags={["Astro", "CSS", "JS"]}
+				  />
+				<ProjectCard
+					title="My blog"
+					description="My personal blog built with Astro"
+					link="https://github.com"
+					linkText="Github"
+					tags={["Astro", "CSS", "JS"]}
+				  />
+			  </div>
+		</section>
+
+		<section class="pb-12">
+			<div class="flex justify-between gap-6 items-center pt-10 pb-10">
+				<div class="flex gap-6 items-center flex-grow">
+				  <h1 class="text-2xl">
+					<span class="heading-prefix">#</span>experimentals
+				  </h1>
+				  <hr class="w-1/2" />
+				</div>
+			  </div>
+			  <div class="flex flex-wrap gap-5">
+				<ProjectCard
+					title="My blog"
+					description="My personal blog built with Astro"
+					link="https://github.com"
+					linkText="Github"
+					tags={["Astro", "CSS", "JS"]}
+				  />
+				<ProjectCard
+					title="My blog"
+					description="My personal blog built with Astro"
+					link="https://github.com"
+					linkText="Github"
+					tags={["Astro", "CSS", "JS"]}
+				  />
+				<ProjectCard
+					title="My blog"
+					description="My personal blog built with Astro"
+					link="https://github.com"
+					linkText="Github"
+					tags={["Astro", "CSS", "JS"]}
+				  />
+				<ProjectCard
+					title="My blog"
+					description="My personal blog built with Astro"
+					link="https://github.com"
+					linkText="Github"
+					tags={["Astro", "CSS", "JS"]}
+				  />
+			  </div>
+		</section>
+	</div>
 </MainLayout>

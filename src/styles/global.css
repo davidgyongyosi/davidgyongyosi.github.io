@@ -50,3 +50,25 @@
     color: #8957F6 !important;
     padding-right: 4px;
   }
+
+  hr {
+    border-color: #8957f6;
+  }
+
+
+  section {
+    opacity: 0;
+    transform: translateY(70px);
+    transition: all 1s;
+    }
+  
+    .show {
+    opacity: 1;
+    transform: translateY(0);
+    }
+  
+    @media(prefers-reduced-motion) {
+    .not-visible {
+      transition: none;
+    }
+    }

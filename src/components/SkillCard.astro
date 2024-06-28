@@ -1,0 +1,50 @@
+---
+export interface Skill {
+  name: string;
+}
+
+export interface Props {
+  category: string;
+  skills: Skill[];
+}
+
+const { category, skills } = Astro.props;
+---
+
+<div class="skill-card">
+  <h3>{category}</h3>
+  <div class="flex flex-wrap gap-2">
+    {skills.map(skill => (
+      <div class="skill">
+        <span class="skill-name">{skill.name}</span>
+      </div>
+    ))}
+    <div class="skill">
+      <span class="skill-name">...</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .skill-card {
+    background-color: #2d2d2d;
+    border: 1px solid #3d3d3d;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 0.5rem;
+    color: #fff;
+    max-width: 250px;
+    min-width: 180px;
+  }
+
+  h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1.5rem;
+    color: #fff;
+  }
+
+  .skill-name {
+    font-size: 1rem;
+    color: #aaa;
+  }
+</style>
