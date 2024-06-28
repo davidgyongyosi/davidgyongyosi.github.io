@@ -50,3 +50,7 @@
     color: #8957F6 !important;
     padding-right: 4px;
   }
+
+  hr {
+    border-color: #8957f6;
+  }
