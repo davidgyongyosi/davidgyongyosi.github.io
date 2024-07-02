@@ -11,12 +11,12 @@ export interface Props {
 const { category, skills } = Astro.props;
 ---
 
-<div class="skill-card">
-  <h3>{category}</h3>
+<div class="skill-card border-gray-500 border-2 shadow-black shadow-md">
+  <h3 class="text-2xl">{category}</h3>
   <div class="flex flex-wrap gap-2">
     {skills.map(skill => (
-      <div class="skill">
-        <span class="skill-name">{skill.name}</span>
+      <div class="flex flex-row flex-wrap gap-2">
+        <span class="border-2 border-gray-600 px-2">{skill.name}</span>
       </div>
     ))}
     <div class="skill">
@@ -27,24 +27,22 @@ const { category, skills } = Astro.props;
 
 <style>
   .skill-card {
-    background-color: #2d2d2d;
-    border: 1px solid #3d3d3d;
+    background-color: transparent;
+    border-style: solid;
     border-radius: 8px;
-    padding: 1rem;
-    margin: 0.5rem;
-    color: #fff;
-    max-width: 250px;
-    min-width: 180px;
+    margin: .5rem;
+    height: 235px;
+    width: 300px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 20px;
+    gap: 10px;
   }
 
   h3 {
-    margin: 0 0 1rem 0;
-    font-size: 1.5rem;
-    color: #fff;
+    color: #8957f6;
   }
 
-  .skill-name {
-    font-size: 1rem;
-    color: #aaa;
-  }
 </style>
