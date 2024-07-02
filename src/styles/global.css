@@ -58,8 +58,8 @@
 
   section {
     opacity: 0;
-    transform: translateY(70px);
-    transition: all 1s;
+    transform: translateY(30px);
+    transition: all 1.4s;
     }
   
     .show {

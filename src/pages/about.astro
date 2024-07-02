@@ -1,14 +1,90 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
+import heroImage from "../assets/hero.png";
+import Image from "astro/components/Image.astro";
+import SkillCard from "../components/SkillCard.astro";
+
 ---
 
 <MainLayout title="About">
 	<div class="p-32">
-		<section class="pb-12 pt-8">
+		<section class="pb-12 pt-12">
 			<h1 class="text-3xl">
 				<span class="heading-prefix">/</span>about-me 
 			  </h1>
+			  <div class="flex pt-16 pl-10 gap-12">
+				<div class="pr-10 text-center items-center">
+					<Image
+					  src={heroImage}
+					  alt="hero image"
+					  class="border-b-2 border-gray-500"
+					  width={300}
+					  height={300}
+					/>
+				  </div>
+				<div class="flex flex-col gap-6 text-lg flex-1">
+						<p class="pb-4">Hello, i'm <span>David!</span> 👋🏼</p>
+						<p class="pb-4">I’m a graduated full-stack software engineer  based in Hungary. I can develop responsive websites from scratch and raise them into modern user-friendly web experiences.
+							Alongside that, I am able to create a full-stack application with the latest technologies and frameworks.</p>
+						<p class="pb-4">I have a passion for creating websites and apps. I love to learn new technologies and frameworks, and I am always looking for ways to improve my skills.</p>
+						<p class="pb-12"> These skills are what make me <span>who I am.</span></p>
+				</div>
+			  </div>
+		</section>
+		<section id="skills">
+			<div class="p-16">
+				<div class="flex gap-6 items-center pt-10 pb-10">
+				  <h1 class="text-3xl">
+					<span class="heading-prefix">#</span>skills
+				  </h1>
+				  <hr class="w-1/2" />
+				</div>
+		  
+				<div class="flex flex-wrap">
+				  <SkillCard
+					category="Languages"
+					skills={[
+					  { name: "Typescript" },
+					  { name: "JavaScript" },
+					  { name: "C#" },
+					  { name: "SQL" },
+					  { name: "HTML" },
+					  { name: "CSS" },
+					]}/>
+				  <SkillCard
+					category="Database"
+					skills={[
+					  { name: "MSSQL" },
+					  { name: "MySQL" },
+					  { name: "SQLite"},
+					  { name: "MongoDB" },
+					]}/>
+				  <SkillCard
+					category="Frameworks"
+					skills={[
+					  { name: "Angular" },
+					  { name: "React" },
+					  { name: "Svelte"},
+					  { name: "Vue" },
+					]}/>
+				  <SkillCard
+					category="Tools"
+					skills={[
+					  { name: "Git" },
+					  { name: "GitHub" },
+					  { name: "Docker"},
+					  { name: "Visual Studio Code" },
+					]}/>
+				</div>
+			</div>
 		</section>
 	</div>
 	
 </MainLayout>
+
+
+<style>
+	span {
+		color: #8957f6;
+	}
+</style>

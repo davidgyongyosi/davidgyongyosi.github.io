@@ -11,60 +11,45 @@ export interface Props {
 const { title, description, link, linkText, tags } = Astro.props;
 ---
 
-<div class="project-card">
-  <div class="tags">
-    {tags.map(tag => (
-      <span class="tag">{tag}</span>
-    ))}
+<div
+  class="project-card border-gray-500 border-2 shadow-black shadow-md flex flex-col"
+>
+  <div>
+    <h3 class="text-2xl">{title}</h3>
+    <p class="text-sm text-gray-400 pt- pb-6">{description}</p>
+    <a href={link} class="button" target="_blank" rel="noreferrer noopener"
+      >{linkText}() =&gt;</a
+    >
+    <div class="flex flex-row flex-wrap gap-2 pt-5">
+      {
+        tags.map((tag) => (
+          <span class="border-2 border-gray-600 px-2">{tag}</span>
+        ))
+      }
+    </div>
   </div>
-  <h3>{title}</h3>
-  <p>{description}</p>
-  <a href={link} class="button" target="_blank" rel="noreferrer noopener">{linkText}() =&gt;</a>
 </div>
 
 <style lang="scss">
   .project-card {
-    background-color: #2d2d2d;
-    border: 1px solid #3d3d3d;
+    background-color: transparent;
     border-radius: 8px;
     padding: 1rem;
-    margin: 0.5rem;
     color: #fff;
-    max-width: 300px;
-
-    transition: all 0.2s ease-in-out;
+    width: 265px;
+    transition: transform 0.3s ease-in-out;
+    position: relative;
+    z-index: 1;
 
     &:hover {
-      background-color: #3d3d3d;
+      transform: scale(1.1);
+      z-index: 10;
     }
   }
 
-  .tags {
-    flex-wrap: wrap;
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .tag {
-    background-color: #444;
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    font-size: 0.875rem;
-  }
-
   h3 {
-    margin: 0;
-    font-size: 1.5rem;
-    color: #fff;
+    color: #8957f6;
   }
-
-  p {
-    color: #aaa;
-    font-size: 1rem;
-    margin: 0.5rem 0 1rem;
-  }
-
   .button {
     background-color: transparent;
     border: 1px solid #8957f6;
@@ -75,9 +60,8 @@ const { title, description, link, linkText, tags } = Astro.props;
     display: inline-block;
 
     &:hover {
-	  background-color: #8957f6;
-	  color: black;
-	}
+      background-color: #8957f6;
+      color: black;
+    }
   }
-
 </style>
