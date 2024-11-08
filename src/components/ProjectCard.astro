@@ -15,15 +15,15 @@ const { title, description, link, linkText, tags } = Astro.props;
   class="project-card border-gray-500 border-2 shadow-black shadow-md flex flex-col"
 >
   <div>
-    <h3 class="text-2xl">{title}</h3>
-    <p class="text-sm text-gray-400 pt- pb-6">{description}</p>
+    <h3 class="text-lg sm:text-2xl">{title}</h3>
+    <p class="text-xs text-gray-400 pb-6">{description}</p>
     <a href={link} class="button" target="_blank" rel="noreferrer noopener"
       >{linkText}() =&gt;</a
     >
     <div class="flex flex-row flex-wrap gap-2 pt-5">
       {
         tags.map((tag) => (
-          <span class="border-2 border-gray-600 px-2">{tag}</span>
+          <span class="border-2 border-gray-600 px-2 text-xs sm:text-sm">{tag}</span>
         ))
       }
     </div>
@@ -45,6 +45,10 @@ const { title, description, link, linkText, tags } = Astro.props;
       transform: scale(1.1);
       z-index: 10;
     }
+
+    @media screen and (max-width: 640px) {
+      width: 100%;
+    }
   }
 
   h3 {
@@ -62,6 +66,10 @@ const { title, description, link, linkText, tags } = Astro.props;
     &:hover {
       background-color: #8957f6;
       color: black;
+    }
+
+    @media screen and (max-width: 640px) {
+      padding: 0.3rem 0.5rem;
     }
   }
 </style>

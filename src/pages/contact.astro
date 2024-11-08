@@ -3,19 +3,19 @@ import MainLayout from "../layouts/MainLayout.astro";
 ---
 
 <MainLayout title="Contact">
-  <div class="p-32">
-    <section class="pt-8">
-      <h1 class="text-3xl pb-6"><span class="heading-prefix">/</span>contacts</h1>
-      <div class="flex flex-row">
-        <div class="w-3/4">
-          <p class="pb-4 w-3/4">Who am I?</p>
-          <p class="text-wrap w-3/4">
+  <div class="p-10 sm:p-26">
+    <section class="pt-12">
+      <h1 class="text-xl sm:text-3xl pb-6"><span class="heading-prefix">/</span>contacts</h1>
+      <div class="flex md:flex-row flex-col gap-7">
+        <div class="sm:w-3/4">
+          <p class="pb-4 sm:w-3/4">Who am I?</p>
+          <p class="sm:text-wrap sm:w-3/4">
             I'm interested in opportunities to work together and learn. I am
             interested in freelance work aswell. However, if you have other
             request or question, don't hesitate to contact me
           </p>
         </div>
-        <div class="border-slate-300 border-2 p-3">
+        <div class="border-slate-300 border-2 p-3 sm:w-fit">
           <h2 class="pb-4">Message me here</h2>
           <p>
             <a href="https://www.linkedin.com/in/davidgyongyosi/" target="_blank" rel="noreferrer noopener"><i class="fa-brands fa-linkedin fa-icons"></i>linkedin profile url</a>
@@ -26,12 +26,12 @@ import MainLayout from "../layouts/MainLayout.astro";
         </div>
       </div>
       <div class="pt-6 pl-4">
-        <h1 class="text-xl pb-6">
+        <h1 class="text-sm sm:text-xl pb-6">
           <span class="heading-prefix">/</span>other-media
         </h1>
         <ul>
           <li>
-            <p>
+            <p class="text-sm sm:text-base">
               <a href="https://github.com/davidgyongyosi" target="_blank" rel="noreferrer noopener"><i class="fa-brands fa-github fa-icons"></i>github.com/davidgyongyosi</a>
             </p>
           </li>
