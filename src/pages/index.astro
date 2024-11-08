@@ -8,12 +8,12 @@ import ViewTransitions from "astro/components/ViewTransitions.astro";
 ---
 
 <MainLayout title="Home">
-  <div class="p-32">
-	<section id="hero pt-8">
-		<div class="flex flex-row justify-between pt-8">
+  <div class="p-10 sm:p-26">
+	<section id="hero" class="pt-8">
+		<div class="flex flex-col items-center sm:justify-between pt-8 gap-3  sm:flex-row">
 			<div class="flex flex-col gap-6">
 			  <div>
-				<h1 class="text-3xl">
+				<h1 class="text-lg md:text-3xl">
 				  I am an <span>enthusiastic</span> web developer.
 				</h1>
 				<p class="text-lg text-gray-400">
@@ -22,10 +22,10 @@ import ViewTransitions from "astro/components/ViewTransitions.astro";
 			  </div>
 			  <a href="mailto:david.gyongyosi@majin.dev" class="btn">Contact_me() =&gt;</a>
 			</div>
-			<div class="pr-10">
+			<div class="sm:pr-10">
 			  <Image
 				src={heroImage}
-				alt="hero image"
+				alt="hero"
 				class="border-b-2 border-gray-500"
 				width={300}
 				height={300}
@@ -40,10 +40,10 @@ import ViewTransitions from "astro/components/ViewTransitions.astro";
 		  <div>
 			<div class="flex justify-center pt-7">
 			  <div>
-				<p class="p-6 text-xl border-gray-500 border-2">
+				<p class="p-2 sm:p-6 text-base sm:text-xl border-gray-500 border-2">
 				  One of my most productive days was throwing away 1000 lines of code.
 				</p>
-				<p class="p-6 text-xl border-gray-500 border-2 w-fit border-t-0">
+				<p class="p-2 sm:p-6 text-base sm:text-xl border-gray-500 border-2 w-fit border-t-0">
 				  - Ken Thompson
 				</p>
 			  </div>
@@ -51,11 +51,10 @@ import ViewTransitions from "astro/components/ViewTransitions.astro";
 		  </div>
 	</section>
 	<section id="projects">
-		
-		<div class="p-16">
+		<div class="p-3 sm:p-8">
 			<div class="flex justify-between gap-6 items-center pt-10 pb-10">
 			  <div class="flex gap-6 items-center flex-grow">
-				<h1 class="text-3xl">
+				<h1 class="text-xl sm:text-3xl">
 				  <span class="heading-prefix">#</span>projects
 				</h1>
 				<hr class="w-1/2" />
@@ -64,7 +63,7 @@ import ViewTransitions from "astro/components/ViewTransitions.astro";
 				>View all projects <i class="fa-solid fa-arrow-right"></i></a
 			  >
 			</div>
-			<div class="flex flex-wrap gap-5">
+			<div class="flex flex-wrap gap-2 sm:gap-4">
 			  <ProjectCard
 				title="Thesis work"
 				description="Full-stack web app for school navigation using 3D assets and Augmented Reality"
@@ -104,15 +103,15 @@ import ViewTransitions from "astro/components/ViewTransitions.astro";
 		  </div>
 	</section>
 	<section id="skills">
-		<div class="p-16">
+		<div class="p-3 sm:p-8">
 			<div class="flex gap-6 items-center pt-10 pb-10">
-			  <h1 class="text-3xl">
+			  <h1 class="text-xl sm:text-3xl">
 				<span class="heading-prefix">#</span>skills
 			  </h1>
 			  <hr class="w-1/2" />
 			</div>
 	  
-			<div class="flex flex-wrap justify-end pl-44">
+			<div class="flex flex-wrap justify-end">
 			  <SkillCard
 				category="Languages"
 				skills={[
@@ -164,15 +163,15 @@ import ViewTransitions from "astro/components/ViewTransitions.astro";
 		  </div>
 	</section>
 	<section id="about-me">
-		<div class="p-16">
+		<div class="p-3 sm:p-8">
 			<div class="flex gap-6 items-center pt-10 pb-10">
-			  <h1 class="text-3xl">
+			  <h1 class="text-xl sm:text-3xl">
 				<span class="heading-prefix">#</span>about-me
 			  </h1>
 			  <hr class="w-1/2" />
 			</div>
 	  
-			<div class="p-16 text-lg">
+			<div class="p-8 sm:p-16 text-lg">
 			  <p class="pb-4">Hello, i'm <span>David!</span> 👋🏼</p>
 			  <p class="pb-4">I’m a graduated full-stack software engineer  based in Hungary. I can develop responsive websites from scratch and raise them into modern user-friendly web experiences.
 				  Alongside that, I am able to create a full-stack application with the latest technologies and frameworks.</p>
