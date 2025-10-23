@@ -1,0 +1,25 @@
+---
+// Reusable section header component
+export interface Props {
+  title: string;
+  showLine?: boolean;
+  linkHref?: string;
+  linkText?: string;
+}
+
+const { title, showLine = true, linkHref, linkText } = Astro.props;
+---
+
+<div class="flex justify-between gap-6 items-center pt-10 pb-10">
+  <div class="flex gap-6 items-center flex-grow">
+    <h1 class="text-xl sm:text-3xl">
+      <span class="heading-prefix">#</span>{title}
+    </h1>
+    {showLine && <hr class="w-1/2" />}
+  </div>
+  {linkHref && linkText && (
+    <a href={linkHref} class="link">
+      {linkText} <i class="fa-solid fa-arrow-right"></i>
+    </a>
+  )}
+</div>

@@ -1,0 +1,23 @@
+// Main SCSS file - uses modern @use syntax
+// This follows the 7-1 pattern (simplified for this project)
+
+// 1. Abstracts
+@use 'abstracts/variables' as *;
+@use 'abstracts/mixins' as *;
+
+// 2. Base
+@use 'base/reset';
+@use 'base/typography';
+
+// 3. Layout
+@use 'layout/container';
+@use 'layout/pages';
+
+// 4. Components
+@use 'components/navigation';
+@use 'components/cards';
+@use 'components/hacked-text';
+
+// 5. Utils
+@use 'utils/animations';
+@use 'utils/helpers';

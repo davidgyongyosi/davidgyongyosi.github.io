@@ -1,0 +1,32 @@
+---
+import SkillCard from "../SkillCard.astro";
+import SectionHeader from "../SectionHeader.astro";
+import type { SkillCategory } from "../../data/skills";
+
+export interface Props {
+  skills: SkillCategory[];
+  alignment?: 'start' | 'end' | 'center';
+}
+
+const { skills, alignment = 'end' } = Astro.props;
+
+const alignmentClasses = {
+  start: 'justify-start',
+  end: 'justify-end',
+  center: 'justify-center'
+};
+---
+
+<section id="skills">
+  <div class="p-3 sm:p-8">
+    <SectionHeader title="skills" />
+    <div class={`flex flex-wrap ${alignmentClasses[alignment]}`}>
+      {skills.map((skillCategory) => (
+        <SkillCard
+          category={skillCategory.category}
+          skills={skillCategory.skills}
+        />
+      ))}
+    </div>
+  </div>
+</section>

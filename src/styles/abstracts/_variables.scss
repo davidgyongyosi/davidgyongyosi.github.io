@@ -1,0 +1,37 @@
+// Colors
+$primary-color: #56b6c2;
+$secondary-dark: #131613;
+$background-dark: #282c34;
+$background-grid: rgb(35, 35, 35);
+$text-light: white;
+$text-primary: #abb2bf;
+$text-gray: #9ca3af;
+$border-gray: #6b7280;
+$error-color: #e06c75;
+
+// Typography
+$font-mono: 'Geist Mono', monospace;
+
+// Spacing
+$spacing-xs: 0.25rem;
+$spacing-sm: 0.5rem;
+$spacing-md: 1rem;
+$spacing-lg: 1.5rem;
+$spacing-xl: 2rem;
+
+// Transitions
+$transition-fast: 0.2s ease-in-out;
+$transition-normal: 0.3s ease-in-out;
+$transition-slow: 1.4s;
+
+// Breakpoints
+$breakpoint-sm: 640px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+$breakpoint-xl: 1280px;
+
+// Z-index layers
+$z-background: -1;
+$z-content: 1;
+$z-navigation: 9;
+$z-navigation-hover: 10;

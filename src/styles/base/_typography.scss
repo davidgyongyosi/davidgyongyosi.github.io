@@ -1,0 +1,36 @@
+@use '../abstracts' as *;
+
+// Import Geist Mono font (using @import for external URLs is still correct)
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap');
+
+// Typography styles
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+h2 {
+  color: $primary-color;
+}
+
+h3 {
+  color: $primary-color;
+}
+
+p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+// Utility classes
+.heading-prefix {
+  color: $primary-color;
+  font-weight: 400;
+  padding: 0.15rem;
+}

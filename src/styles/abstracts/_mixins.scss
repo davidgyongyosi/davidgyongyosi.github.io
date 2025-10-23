@@ -1,0 +1,56 @@
+@use 'variables' as *;
+
+// Responsive breakpoints
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == sm {
+    @media screen and (max-width: $breakpoint-sm) {
+      @content;
+    }
+  } @else if $breakpoint == md {
+    @media screen and (min-width: $breakpoint-md) {
+      @content;
+    }
+  } @else if $breakpoint == lg {
+    @media screen and (min-width: $breakpoint-lg) {
+      @content;
+    }
+  }
+}
+
+// Corner border pattern (used in multiple places)
+@mixin corner-border($size: 17px, $color: $primary-color) {
+  background:
+    linear-gradient(to right, $color 1px, transparent 1px) 0 0,
+    linear-gradient(to right, $color 1px, transparent 1px) 0 100%,
+    linear-gradient(to left, $color 1px, transparent 1px) 100% 0,
+    linear-gradient(to left, $color 1px, transparent 1px) 100% 100%,
+    linear-gradient(to bottom, $color 1px, transparent 1px) 0 0,
+    linear-gradient(to bottom, $color 1px, transparent 1px) 100% 0,
+    linear-gradient(to top, $color 1px, transparent 1px) 0 100%,
+    linear-gradient(to top, $color 1px, transparent 1px) 100% 100%;
+  background-repeat: no-repeat;
+  background-size: $size $size;
+}
+
+// Button styles
+@mixin button-primary {
+  background-color: transparent;
+  border: 1px solid $primary-color;
+  color: $primary-color;
+  transition: all $transition-fast;
+  padding: 0.3rem 1rem;
+  width: fit-content;
+
+  &:hover {
+    background-color: $primary-color;
+    color: black;
+  }
+}
+
+// Card styles
+@mixin card {
+  background-color: transparent;
+  border: 2px solid $border-gray;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}

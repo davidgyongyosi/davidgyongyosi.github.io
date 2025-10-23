@@ -1,0 +1,31 @@
+---
+import SectionHeader from "../SectionHeader.astro";
+
+export interface Props {
+  intro: string;
+  paragraphs: string[];
+  conclusion: string;
+  ctaText?: string;
+  ctaLink?: string;
+}
+
+const { intro, paragraphs, conclusion, ctaText, ctaLink } = Astro.props;
+---
+
+<section id="about-me">
+  <div class="p-3 sm:p-8">
+    <SectionHeader title="about-me" />
+    <div class="p-4 sm:p-16 text-sm sm:text-lg">
+      <p class="pb-4" set:html={intro}></p>
+      {paragraphs.map((paragraph) => (
+        <p class="pb-4">{paragraph}</p>
+      ))}
+      <p class="pb-12" set:html={conclusion}></p>
+      {ctaText && ctaLink && (
+        <a href={ctaLink} class="btn">
+          <span>{ctaText} =&gt;</span>
+        </a>
+      )}
+    </div>
+  </div>
+</section>

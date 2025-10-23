@@ -6,70 +6,58 @@ export interface Props {
   link: string;
   linkText: string;
   tags: string[];
+  year?: string;
+  status?: 'completed' | 'in-progress' | 'ongoing';
+  role?: string;
+  highlights?: string[];
 }
 
-const { title, description, link, linkText, tags } = Astro.props;
+const { title, description, link, linkText, tags, year, status, role, highlights } = Astro.props;
 ---
 
-<div
-  class="project-card border-gray-500 border-2 shadow-black shadow-md flex flex-col"
->
-  <div>
-    <h3 class="text-lg sm:text-2xl">{title}</h3>
-    <p class="text-xs text-gray-400 pb-6">{description}</p>
-    <a href={link} class="button" target="_blank" rel="noreferrer noopener"
-      >{linkText}() =&gt;</a
-    >
-    <div class="flex flex-row flex-wrap gap-2 pt-5">
-      {
-        tags.map((tag) => (
-          <span class="border-2 border-gray-600 px-2 text-xs sm:text-sm">{tag}</span>
-        ))
-      }
+<article class="project-card">
+  <div class="card-content">
+    <div class="card-header">
+      <div class="title-row">
+        <h3 class="card-title">{title}</h3>
+        {year && <span class="card-year">{year}</span>}
+      </div>
+      {(status || role) && (
+        <div class="meta-row">
+          {status && (
+            <span class={`status-badge status-${status}`}>
+              {status === 'completed' ? '✓ Completed' :
+               status === 'in-progress' ? '⟳ In Progress' :
+               '◉ Ongoing'}
+            </span>
+          )}
+          {role && <span class="role-badge">{role}</span>}
+        </div>
+      )}
+    </div>
+
+    <p class="card-description">{description}</p>
+
+    {highlights && highlights.length > 0 && (
+      <ul class="highlights-list">
+        {highlights.map((highlight) => (
+          <li>{highlight}</li>
+        ))}
+      </ul>
+    )}
+
+    <div class="card-footer">
+      <div class="tags-container">
+        {tags.map((tag) => (
+          <span class="tag-wrapper">
+            <span class="tag-content">{tag}</span>
+          </span>
+        ))}
+      </div>
+
+      <a href={link} class="card-link" target="_blank" rel="noreferrer noopener">
+        <span>{linkText}() <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+      </a>
     </div>
   </div>
-</div>
-
-<style lang="scss">
-  .project-card {
-    background-color: transparent;
-    border-radius: 8px;
-    padding: 1rem;
-    color: #fff;
-    width: 265px;
-    transition: transform 0.3s ease-in-out;
-    position: relative;
-    z-index: 1;
-
-    &:hover {
-      transform: scale(1.1);
-      z-index: 10;
-    }
-
-    @media screen and (max-width: 640px) {
-      width: 100%;
-    }
-  }
-
-  h3 {
-    color: #8957f6;
-  }
-  .button {
-    background-color: transparent;
-    border: 1px solid #8957f6;
-    color: #8957f6;
-    padding: 0.5rem 1rem;
-    text-decoration: none;
-    transition: all 0.2s ease-in-out;
-    display: inline-block;
-
-    &:hover {
-      background-color: #8957f6;
-      color: black;
-    }
-
-    @media screen and (max-width: 640px) {
-      padding: 0.3rem 0.5rem;
-    }
-  }
-</style>
+</article>
