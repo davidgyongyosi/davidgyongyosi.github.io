@@ -1,5 +1,5 @@
 ---
-// Quote component for displaying quotes
+// Elegant Quote component
 export interface Props {
   text: string;
   author: string;
@@ -8,13 +8,98 @@ export interface Props {
 const { text, author } = Astro.props;
 ---
 
-<div class="flex justify-center pt-7">
-  <div>
-    <p class="p-2 sm:p-6 text-base sm:text-xl border-gray-500 border-2">
-      {text}
-    </p>
-    <p class="p-2 sm:p-6 text-base sm:text-xl border-gray-500 border-2 w-fit border-t-0">
-      - {author}
-    </p>
-  </div>
+<div class="quote-container animate-scale">
+  <blockquote class="quote animate-stagger">
+    <p class="quote-text">{text}</p>
+    <footer class="quote-author">— {author}</footer>
+  </blockquote>
 </div>
+
+<style>
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .quote-container {
+    display: flex;
+    justify-content: center;
+    padding: 3rem 1rem 2rem;
+  }
+
+  .quote {
+    max-width: 500px;
+    width: 100%;
+    margin: 0;
+    padding: 2rem;
+    position: relative;
+    text-align: center;
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  .quote::before {
+    content: '"';
+    position: absolute;
+    top: -1rem;
+    left: 0;
+    font-size: 4rem;
+    font-family: 'Geist Mono', monospace;
+    color: #56b6c2;
+    opacity: 0.3;
+    line-height: 1;
+  }
+
+  .quote-text {
+    font-family: 'Geist Mono', monospace;
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: #e2e8f0;
+    margin: 0 0 1.5rem 0;
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  .quote-author {
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.875rem;
+    color: #9ca3af;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Responsive design */
+  @media (max-width: 640px) {
+    .quote {
+      padding: 1.5rem 1rem;
+    }
+
+    .quote-text {
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .quote-author {
+      font-size: 0.75rem;
+    }
+
+    .quote::before {
+      font-size: 3rem;
+      top: -0.5rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .quote {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>

@@ -1,22 +1,157 @@
 @use '../abstracts' as *;
 
-// Section reveal animations
-section {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all $transition-slow;
+// Custom CSS properties for animation control
+:root {
+  --animation-duration: 0.8s;
+  --animation-stagger: 0.15s;
+  --animation-distance: 40px;
 }
 
-.show {
+// Base animation classes with modern performance
+.animate-on-scroll {
+  opacity: 0;
+  transition:
+    opacity var(--animation-duration) cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform var(--animation-duration) cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: opacity, transform;
+}
+
+// Different animation types
+.animate-fade-up {
+  transform: translateY(var(--animation-distance));
+}
+
+.animate-fade-down {
+  transform: translateY(calc(var(--animation-distance) * -1));
+}
+
+.animate-fade-left {
+  transform: translateX(var(--animation-distance));
+}
+
+.animate-fade-right {
+  transform: translateX(calc(var(--animation-distance) * -1));
+}
+
+.animate-scale {
+  transform: scale(0.9);
+}
+
+.animate-fade {
+  // No transform, just opacity
+}
+
+// Staggered animations for child elements
+.animate-stagger > * {
+  opacity: 0;
+  transition:
+    opacity var(--animation-duration) cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform var(--animation-duration) cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: opacity, transform;
+
+  &.animate-fade-up {
+    transform: translateY(var(--animation-distance));
+  }
+}
+
+// Visible state
+.is-visible {
+  opacity: 1;
+  transform: translateY(0) translateX(0) scale(1);
+}
+
+// Staggered child visibility
+.animate-stagger.is-visible > * {
+  opacity: 1;
+  transform: translateY(0) translateX(0);
+
+  @for $i from 1 through 10 {
+    &:nth-child(#{$i}) {
+      transition-delay: calc(var(--animation-stagger) * #{$i - 1});
+    }
+  }
+}
+
+// Section-specific animations with better defaults
+section:not(.animate-section) {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity var(--animation-duration) cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform var(--animation-duration) cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+section:not(.animate-section).is-visible {
   opacity: 1;
   transform: translateY(0);
 }
 
+// Sections that should only animate their children, not themselves
+.animate-section {
+  opacity: 1;
+  transform: none;
+}
+
+// Enhanced animation types for specific elements
+.animate-slide-in-left {
+  @extend .animate-on-scroll;
+  @extend .animate-fade-left;
+}
+
+.animate-slide-in-right {
+  @extend .animate-on-scroll;
+  @extend .animate-fade-right;
+}
+
+.animate-scale-in {
+  @extend .animate-on-scroll;
+  @extend .animate-scale;
+}
+
+.animate-fade-in {
+  @extend .animate-on-scroll;
+  @extend .animate-fade;
+}
+
+// Performance optimizations
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
 // Respect user preference for reduced motion
 @media (prefers-reduced-motion) {
-  section {
-    transition: none;
+  :root {
+    --animation-duration: 0.1s;
+    --animation-stagger: 0s;
+    --animation-distance: 0px;
+  }
+
+  .animate-on-scroll,
+  .animate-stagger > * {
     opacity: 1;
     transform: none;
+    transition: opacity 0.1s ease;
+  }
+
+  .is-visible {
+    transform: none;
+  }
+}
+
+// Enhanced animations for larger screens
+@media (min-width: $breakpoint-lg) {
+  :root {
+    --animation-distance: 60px;
+    --animation-duration: 1s;
+  }
+}
+
+// Subtle animations for mobile
+@media (max-width: $breakpoint-md) {
+  :root {
+    --animation-distance: 20px;
+    --animation-duration: 0.6s;
   }
 }

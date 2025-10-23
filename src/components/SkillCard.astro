@@ -10,28 +10,73 @@ export interface Props {
 
 const { category, skills } = Astro.props;
 const skillCount = skills.length;
+
+// Get category icon based on category name
+const getCategoryIcon = (category: string): string => {
+  const icons: Record<string, string> = {
+    'Languages': 'fa-code',
+    'Database': 'fa-database',
+    'Frameworks': 'fa-layer-group',
+    'Tools': 'fa-tools',
+    'Others': 'fa-ellipsis-h'
+  };
+  return icons[category] || 'fa-cube';
+};
+
+// Get category color for visual differentiation
+const getCategoryColor = (category: string): string => {
+  const colors: Record<string, string> = {
+    'Languages': '#56b6c2',     // cyan
+    'Database': '#4ade80',      // green
+    'Frameworks': '#fbbf24',    // yellow
+    'Tools': '#f87171',         // red
+    'Others': '#a78bfa'         // purple
+  };
+  return colors[category] || '#56b6c2';
+};
+
+// Use the functions to set values for the component
+const categoryIcon = getCategoryIcon(category);
+const categoryColor = getCategoryColor(category);
+
+
 ---
 
-<a href="/about" class="skill-card">
+<a href="/about" class="skill-card" style={`--category-color: ${categoryColor};`}>
   <div class="card-content">
-    <div class="skill-card-header">
-      <h3 class="skill-category">{category}</h3>
-      <span class="skill-count">{skillCount}</span>
+    <!-- Enhanced header with icon and count -->
+    <header class="skill-header">
+      <div class="header-content">
+        <div class="category-icon">
+          <i class={`fa-solid ${categoryIcon}`}></i>
+        </div>
+        <div class="category-info">
+          <h3 class="skill-category">{category}</h3>
+          <span class="skill-count">{skillCount} technologies</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Skills as visual cloud/grid -->
+    <div class="skills-cloud">
+      {skills.slice(0, 8).map((skill, index) => (
+        <span
+          class="skill-bubble"
+          style={`--delay: ${index * 0.1}s; --size: ${Math.random() * 0.3 + 0.8};`}
+        >
+          {skill.name}
+        </span>
+      ))}
+      {skills.length > 8 && (
+        <span class="skill-bubble more-bubble">
+          +{skills.length - 8}
+        </span>
+      )}
     </div>
 
-    <div class="skills-grid">
-      {skills.map(skill => (
-        <div class="skill-item">
-          <span class="skill-wrapper">
-            <span class="skill-name">{skill.name}</span>
-          </span>
-        </div>
-      ))}
-      <div class="skill-item skill-more">
-        <span class="skill-wrapper">
-          <span class="skill-name">& more...</span>
-        </span>
-      </div>
-    </div>
+    <!-- Subtle indicator footer -->
+    <footer class="skill-footer">
+      <span class="explore-text">View details →</span>
+    </footer>
   </div>
 </a>

@@ -1,36 +1,162 @@
 @use '../abstracts' as *;
+@use 'sass:color';
 
 // Import Geist Mono font (using @import for external URLs is still correct)
 @import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap');
 
-// Typography styles
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+// Base typography reset
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: $font-mono;
+  font-size: 17px; // Base font size for rem calculations (sweet spot)
+  line-height: $line-height-normal;
+  color: $text-light;
+  background-color: $background-dark;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: $font-mono;
+  font-weight: $font-weight-normal;
+  line-height: $line-height-relaxed;
   margin: 0;
-  font-weight: 500;
-  line-height: 1.2;
+  padding: 0;
+}
+
+// Consistent heading hierarchy with responsive typography
+h1 {
+  @include text-h1;
+  margin: 0;
 }
 
 h2 {
-  color: $primary-color;
+  @include text-h2;
+  margin: 0;
 }
 
 h3 {
+  @include text-h3;
+  margin: 0;
+}
+
+h4 {
+  @include text-h4;
+  margin: 0;
+}
+
+h5,
+h6 {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-normal;
+  margin: 0;
+}
+
+// Base text elements
+p {
+  @include text-body;
+  margin: 0;
+}
+
+a {
+  color: $primary-color;
+  text-decoration: none;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: color.adjust($primary-color, $lightness: 10%);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $primary-color;
+    outline-offset: 2px;
+  }
+}
+
+// Lists
+ul, ol {
+  @include text-body;
+  padding-left: $spacing-lg;
+  margin: 0;
+}
+
+li {
+  margin-bottom: $spacing-xs;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Code elements
+code {
+  font-family: $font-mono;
+  font-size: $font-size-sm;
+  background-color: rgba($primary-color, 0.1);
+  padding: 0.1rem 0.3rem;
+  border-radius: 4px;
   color: $primary-color;
 }
 
-p {
-  margin: 0;
-  line-height: 1.6;
+pre {
+  font-family: $font-mono;
+  font-size: $font-size-sm;
+  background-color: rgba($border-gray, 0.2);
+  padding: $spacing-md;
+  border-radius: 8px;
+  overflow-x: auto;
+  line-height: $line-height-normal;
+
+  code {
+    background-color: transparent;
+    padding: 0;
+    color: inherit;
+  }
 }
 
-// Utility classes
+// Blockquote
+blockquote {
+  border-left: 3px solid $primary-color;
+  padding-left: $spacing-lg;
+  margin: $spacing-lg 0;
+  font-style: italic;
+  color: $text-primary;
+
+  p {
+    margin-bottom: $spacing-sm;
+  }
+}
+
+// Utility classes for consistent styling
 .heading-prefix {
   color: $primary-color;
-  font-weight: 400;
+  @include text-small;
+  font-weight: $font-weight-normal;
   padding: 0.15rem;
+}
+
+.text-muted {
+  color: $text-primary;
+}
+
+.text-small {
+  @include text-small;
+}
+
+.text-caption {
+  @include text-caption;
+}
+
+.text-large {
+  @include text-body-large;
+}
+
+// Focus-visible styles for accessibility
+*:focus-visible {
+  outline: 2px solid $primary-color;
+  outline-offset: 2px;
 }

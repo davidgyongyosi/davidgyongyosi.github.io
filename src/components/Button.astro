@@ -1,0 +1,68 @@
+---
+/**
+ * Reusable Button Component
+ *
+ * A flexible button component with multiple variants and consistent styling.
+ * All button styles are centralized in src/styles/components/_buttons.scss
+ *
+ * @param {string} href - The URL to link to (makes it an <a> tag)
+ * @param {string} variant - Button style variant: 'primary' | 'compact' | 'link' | 'secondary'
+ * @param {string} target - Link target attribute (e.g., '_blank')
+ * @param {string} rel - Link rel attribute (e.g., 'noreferrer noopener')
+ * @param {string} ariaLabel - Accessibility label for the button
+ * @param {boolean} disabled - Disabled state for button
+ * @param {string} icon - Optional FontAwesome icon class (e.g., 'fa-arrow-up-right-from-square')
+ */
+
+export interface Props {
+  href?: string;
+  variant?: 'primary' | 'compact' | 'link' | 'secondary';
+  target?: string;
+  rel?: string;
+  ariaLabel?: string;
+  disabled?: boolean;
+  icon?: string;
+}
+
+const {
+  href,
+  variant = 'primary',
+  target,
+  rel,
+  ariaLabel,
+  disabled = false,
+  icon
+} = Astro.props;
+
+// Map variant to CSS class
+const variantClass = variant === 'primary' ? 'btn' : `btn-${variant}`;
+
+// Determine if this should be a link or button
+const isLink = !!href;
+---
+
+{isLink ? (
+  <a
+    href={href}
+    class={variantClass}
+    target={target}
+    rel={rel}
+    aria-label={ariaLabel}
+  >
+    <span>
+      <slot />
+      {icon && <i class={`fa-solid ${icon}`}></i>}
+    </span>
+  </a>
+) : (
+  <button
+    class={variantClass}
+    aria-label={ariaLabel}
+    disabled={disabled}
+  >
+    <span>
+      <slot />
+      {icon && <i class={`fa-solid ${icon}`}></i>}
+    </span>
+  </button>
+)}

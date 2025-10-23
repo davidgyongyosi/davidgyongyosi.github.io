@@ -1,5 +1,7 @@
 ---
 // ProjectCard.astro
+import Button from "./Button.astro";
+
 export interface Props {
   title: string;
   description: string;
@@ -12,52 +14,63 @@ export interface Props {
   highlights?: string[];
 }
 
-const { title, description, link, linkText, tags, year, status, role, highlights } = Astro.props;
+const { title, description, link, linkText, tags, year, status } = Astro.props;
+
+// Get status icon
+const getStatusIcon = (status: string): string => {
+  switch (status) {
+    case 'completed': return '✓';
+    case 'in-progress': return '⟳';
+    case 'ongoing': return '◉';
+    default: return '';
+  }
+};
+
 ---
 
 <article class="project-card">
   <div class="card-content">
-    <div class="card-header">
-      <div class="title-row">
+    <!-- Simplified header with title and status -->
+    <header class="card-header">
+      <div class="header-top">
         <h3 class="card-title">{title}</h3>
-        {year && <span class="card-year">{year}</span>}
+        {status && (
+          <span class={`status-indicator status-${status}`} title={status}>
+            {getStatusIcon(status)}
+          </span>
+        )}
       </div>
-      {(status || role) && (
-        <div class="meta-row">
-          {status && (
-            <span class={`status-badge status-${status}`}>
-              {status === 'completed' ? '✓ Completed' :
-               status === 'in-progress' ? '⟳ In Progress' :
-               '◉ Ongoing'}
-            </span>
-          )}
-          {role && <span class="role-badge">{role}</span>}
-        </div>
+      {year && <span class="year-badge">{year}</span>}
+    </header>
+
+    <!-- Tech stack as primary visual element -->
+    <div class="tech-stack">
+      {tags.slice(0, 6).map((tag) => (
+        <span class="tech-tag">
+          <span class="tag-content">{tag}</span>
+        </span>
+      ))}
+      {tags.length > 6 && (
+        <span class="tech-tag more-tags">
+          <span class="tag-content">+{tags.length - 6}</span>
+        </span>
       )}
     </div>
 
+    <!-- Concise description -->
     <p class="card-description">{description}</p>
 
-    {highlights && highlights.length > 0 && (
-      <ul class="highlights-list">
-        {highlights.map((highlight) => (
-          <li>{highlight}</li>
-        ))}
-      </ul>
-    )}
-
-    <div class="card-footer">
-      <div class="tags-container">
-        {tags.map((tag) => (
-          <span class="tag-wrapper">
-            <span class="tag-content">{tag}</span>
-          </span>
-        ))}
-      </div>
-
-      <a href={link} class="card-link" target="_blank" rel="noreferrer noopener">
-        <span>{linkText}() <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
-      </a>
-    </div>
+    <!-- Single CTA link -->
+    <footer class="card-footer">
+      <Button
+        href={link}
+        variant="secondary"
+        target="_blank"
+        rel="noreferrer noopener"
+        icon="fa-arrow-up-right-from-square"
+      >
+        {linkText}()
+      </Button>
+    </footer>
   </div>
 </article>

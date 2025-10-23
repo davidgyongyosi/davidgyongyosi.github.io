@@ -1,0 +1,298 @@
+@use '../abstracts' as *;
+
+// ========================================
+// BUTTON STYLES - CENTRALIZED
+// ========================================
+
+// Base button with corner-border pattern
+.btn {
+  padding: 0.2rem;
+  display: inline-block;
+  text-decoration: none;
+  position: relative;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  transition: transform $transition-fast;
+
+  // Corner border as pseudo-element so it transforms with the button
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    @include corner-border(7px, $primary-color);
+    background-size: 7px 7px;
+    background-position: 0 0, 0 100%, 100% 0, 100% 100%, 0 0, 100% 0, 0 100%, 100% 100%;
+    transition: background-size $transition-fast, background-position $transition-fast;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  span {
+    background-color: rgba($primary-color, 0.25);
+    padding: 0.5rem 1rem;
+    display: block;
+    color: $text-light;
+    position: relative;
+    z-index: 1;
+    transition: background-color $transition-fast;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+
+    &::before {
+      background-size: 10px 10px;
+      background-position: 3px 3px, 3px calc(100% - 3px), calc(100% - 3px) 3px, calc(100% - 3px) calc(100% - 3px), 3px 3px, calc(100% - 3px) 3px, 3px calc(100% - 3px), calc(100% - 3px) calc(100% - 3px);
+    }
+
+    span {
+      background-color: rgba($primary-color, 0.35);
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Compact button variant (smaller padding)
+.btn-compact {
+  padding: 0.2rem;
+  display: inline-block;
+  text-decoration: none;
+  position: relative;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  transition: transform $transition-fast;
+
+  // Corner border as pseudo-element so it transforms with the button
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    @include corner-border(7px, $primary-color);
+    background-size: 7px 7px;
+    background-position: 0 0, 0 100%, 100% 0, 100% 100%, 0 0, 100% 0, 0 100%, 100% 100%;
+    transition: background-size $transition-fast, background-position $transition-fast;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  span {
+    background-color: rgba($primary-color, 0.25);
+    padding: 0.5rem 1rem;
+    display: block;
+    color: $text-light;
+    position: relative;
+    z-index: 1;
+    transition: background-color $transition-fast;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+
+    &::before {
+      background-size: 10px 10px;
+      background-position: 3px 3px, 3px calc(100% - 3px), calc(100% - 3px) 3px, calc(100% - 3px) calc(100% - 3px), 3px 3px, calc(100% - 3px) 3px, 3px calc(100% - 3px), calc(100% - 3px) calc(100% - 3px);
+    }
+
+    span {
+      background-color: rgba($primary-color, 0.35);
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Link-styled button (for cards and inline actions)
+.btn-link {
+  padding: 0.2rem;
+  display: inline-block;
+  text-decoration: none;
+  position: relative;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  align-self: flex-start;
+
+  // Corner border as pseudo-element
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    @include corner-border(7px, $primary-color);
+    background-size: 7px 7px;
+    background-position: 0 0, 0 100%, 100% 0, 100% 100%, 0 0, 100% 0, 0 100%, 100% 100%;
+    transition: background-size $transition-fast, background-position $transition-fast;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  span {
+    background-color: $secondary-dark;
+    padding: 0.5rem 1rem;
+    display: block;
+    color: $text-light;
+    position: relative;
+    z-index: 1;
+
+    i {
+      font-size: 0.75rem;
+      margin-left: 0.25rem;
+      transition: transform $transition-fast;
+    }
+  }
+
+  &:hover {
+    &::before {
+      background-size: 10px 10px;
+      background-position: 3px 3px, 3px calc(100% - 3px), calc(100% - 3px) 3px, calc(100% - 3px) calc(100% - 3px), 3px 3px, calc(100% - 3px) 3px, 3px calc(100% - 3px), calc(100% - 3px) calc(100% - 3px);
+    }
+
+    span i {
+      transform: translateX(2px);
+    }
+  }
+}
+
+// Secondary button variant (different color scheme)
+.btn-secondary {
+  padding: 0.2rem;
+  display: inline-block;
+  text-decoration: none;
+  position: relative;
+  cursor: pointer;
+  border: none;
+  transition: transform $transition-fast;
+
+  // Corner border as pseudo-element so it transforms with the button
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    @include corner-border(7px, $primary-color);
+    background-size: 7px 7px;
+    background-position: 0 0, 0 100%, 100% 0, 100% 100%, 0 0, 100% 0, 0 100%, 100% 100%;
+    transition: background-size $transition-fast, background-position $transition-fast;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  span {
+    background-color: rgba($text-primary, 0.1);
+    padding: 0.5rem 1rem;
+    display: block;
+    color: $text-light;
+    position: relative;
+    z-index: 1;
+    transition: background-color $transition-fast;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+
+    &::before {
+      background-size: 10px 10px;
+      background-position: 3px 3px, 3px calc(100% - 3px), calc(100% - 3px) 3px, calc(100% - 3px) calc(100% - 3px), 3px 3px, calc(100% - 3px) 3px, 3px calc(100% - 3px), calc(100% - 3px) calc(100% - 3px);
+    }
+
+    span {
+      background-color: rgba($text-primary, 0.2);
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Navigation button variant (for nav items)
+.btn-nav {
+  padding: 0.2rem;
+  display: inline-block;
+  text-decoration: none;
+  position: relative;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+
+  // Corner border as pseudo-element
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    @include corner-border(7px, $primary-color);
+    background-size: 7px 7px;
+    background-position: 0 0, 0 100%, 100% 0, 100% 100%, 0 0, 100% 0, 0 100%, 100% 100%;
+    transition: background-size $transition-fast, background-position $transition-fast;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  span {
+    background-color: $secondary-dark;
+    padding: 0.5rem 1rem;
+    display: block;
+    color: $text-light;
+    position: relative;
+    z-index: 1;
+    white-space: nowrap;
+  }
+
+  &:hover::before {
+    background-size: 10px 10px;
+    background-position: 3px 3px, 3px calc(100% - 3px), calc(100% - 3px) 3px, calc(100% - 3px) calc(100% - 3px), 3px 3px, calc(100% - 3px) 3px, 3px calc(100% - 3px), calc(100% - 3px) calc(100% - 3px);
+  }
+
+  // Active state
+  &.active {
+    span {
+      background-color: rgba($primary-color, 0.35);
+    }
+
+    &::before {
+      background-size: 10px 10px;
+      background-position: 3px 3px, 3px calc(100% - 3px), calc(100% - 3px) 3px, calc(100% - 3px) calc(100% - 3px), 3px 3px, calc(100% - 3px) 3px, 3px calc(100% - 3px), calc(100% - 3px) calc(100% - 3px);
+    }
+  }
+
+  // Menu toggle specific
+  &.menu-toggle {
+    cursor: move;
+
+    &:focus-visible {
+      outline: 2px solid $primary-color;
+      outline-offset: 4px;
+    }
+  }
+}
+
+// Disabled button state
+.btn:disabled,
+.btn-compact:disabled,
+.btn-link:disabled,
+.btn-secondary:disabled,
+.btn-nav:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}

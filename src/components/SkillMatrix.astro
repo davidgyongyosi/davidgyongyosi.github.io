@@ -1,0 +1,762 @@
+---
+import type { SkillCategory } from "../data/skills";
+
+export interface Props {
+  skills: SkillCategory[];
+}
+
+const { skills } = Astro.props;
+
+// Get category colors (project theme colors)
+const getCategoryColor = (category: string): string => {
+  const colors: Record<string, string> = {
+    'Languages': '#56b6c2',                    // primary cyan
+    'Frameworks & Libraries': '#fbbf24',       // muted yellow
+    'Database & Data': '#4ade80',               // muted green
+    'DevOps & Infrastructure': '#e06c75',       // error red (muted)
+    'Tools & Styling': '#a78bfa'                // muted purple
+  };
+  return colors[category] || '#56b6c2';
+};
+
+// Get skill icon URLs from dashboardicons.com
+const getSkillIcon = (skillName: string): string => {
+  const icons: Record<string, string> = {
+    // Languages
+    'TypeScript': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg',
+    'JavaScript': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg',
+    'C#': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg',
+    'Go': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg',
+    'Rust': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rust/rust-original.svg',
+    'SQL': 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons@v11/icons/postgresql.svg',
+    'HTML': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg',
+
+    // Frameworks & Libraries
+    'React': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg',
+    'Vue': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg',
+    'Angular': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg',
+    'Astro': 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons@v11/icons/astro.svg',
+    'Next.js': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg',
+    'Svelte': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/svelte/svelte-original.svg',
+    'Electron': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/electron/electron-original.svg',
+    'Tauri': 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons@v11/icons/tauri.svg',
+    '.NET': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dot-net/dot-net-original.svg',
+
+    // Database & Data
+    'MSSQL': 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons@v11/icons/microsoftsqlserver.svg',
+    'MySQL': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg',
+    'SQLite': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg',
+    'PostgreSQL': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg',
+
+    // DevOps & Infrastructure
+    'Docker': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg',
+    'Kubernetes': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-original.svg',
+    'Node.js': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg',
+
+    // Tools & Styling
+    'Git': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg',
+    'GitHub': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg',
+    'Figma': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg',
+    'VS Code': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg',
+    'Neovim': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vim/vim-original.svg',
+    'CSS': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg',
+    'SCSS': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sass/sass-original.svg',
+    'Tailwind': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg'
+  };
+  return icons[skillName] || 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/code/code-original.svg';
+};
+
+// Get hack/tech themed descriptions
+const getSkillDescription = (skillName: string): string => {
+  const descriptions: Record<string, string> = {
+    // Languages
+    'TypeScript': 'TYPE_SYSTEM.exe',
+    'JavaScript': 'RUNTIME.vm',
+    'C#': 'COMPILED.dll',
+    'Go': 'CONCURRENCY.go',
+    'Rust': 'MEMORY_SAFE.rs',
+    'SQL': 'QUERY.sql',
+    'HTML': 'MARKUP.html',
+
+    // Frameworks & Libraries
+    'React': 'COMPONENT.jsx',
+    'Vue': 'REACTIVE.vue',
+    'Angular': 'FRAMEWORK.ts',
+    'Astro': 'STATIC.astro',
+    'Next.js': 'SSR.react',
+    'Svelte': 'COMPILED.svelte',
+    'Electron': 'DESKTOP.app',
+    'Tauri': 'RUST_DESKTOP.exe',
+    '.NET': 'FRAMEWORK.dll',
+
+    // Database & Data
+    'MSSQL': 'ENTERPRISE.mdf',
+    'MySQL': 'OPENSOURCE.db',
+    'SQLite': 'EMBEDDED.db',
+    'PostgreSQL': 'POSTGRES.sql',
+
+    // DevOps & Infrastructure
+    'Docker': 'CONTAINER.docker',
+    'Kubernetes': 'ORCHESTRATOR.k8s',
+    'Node.js': 'RUNTIME.node',
+
+    // Tools & Styling
+    'Git': 'VERSION.git',
+    'GitHub': 'REMOTE.git',
+    'Figma': 'DESIGN.fig',
+    'VS Code': 'EDITOR.code',
+    'Neovim': 'TERMINAL.vim',
+    'CSS': 'STYLES.css',
+    'SCSS': 'PREPROCESSOR.scss',
+    'Tailwind': 'UTILITY.css'
+  };
+  return descriptions[skillName] || `${skillName.toUpperCase()}.bin`;
+};
+
+const getTotalSkills = skills.reduce((total, category) => total + category.skills.length, 0);
+
+// Flatten all skills with their categories for grid layout
+const allSkills = skills.flatMap(category =>
+  category.skills.map(skill => ({
+    name: skill.name,
+    category: category.category,
+    color: getCategoryColor(category.category),
+    icon: getSkillIcon(skill.name),
+    description: getSkillDescription(skill.name)
+  }))
+).sort((a, b) => a.name.localeCompare(b.name));
+
+---
+
+<div class="skill-matrix" id="skills">
+  <!-- Terminal Header -->
+  <div class="matrix-header">
+    <div class="terminal-header">
+      <div class="terminal-buttons">
+        <div class="terminal-button close"></div>
+        <div class="terminal-button minimize"></div>
+        <div class="terminal-button maximize"></div>
+      </div>
+      <div class="terminal-title">root@hacker:~/skills --matrix --scan</div>
+    </div>
+  </div>
+
+  <!-- Main Layout Container -->
+  <div class="layout-container">
+    <!-- Left Sidebar - Categories -->
+    <div class="categories-sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-title">CATEGORIES</div>
+        <div class="sidebar-stats">{skills.length} modules</div>
+      </div>
+      <div class="categories-list">
+        {skills.map((category, categoryIndex) => (
+          <div class="category-item" style={`--category-color: ${getCategoryColor(category.category)}; --delay: ${categoryIndex * 0.1}s;`}>
+            <div class="category-indicator"></div>
+            <div class="category-info">
+              <div class="category-name">{category.category}</div>
+              <div class="category-count">{category.skills.length} skills</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Right Content - Skill Cards -->
+    <div class="content-area">
+      <div class="content-header">
+        <div class="legend-header">SKILL MATRIX</div>
+        <div class="legend-items">
+          {skills.map((category) => (
+            <div class="legend-dot" style={`background: ${getCategoryColor(category.category)};`} title={category.category}></div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Skill Grid -->
+      <div class="skill-grid">
+        {allSkills.map((skill, index) => (
+          <div
+            class="skill-tile"
+            style={`--tile-color: ${skill.color}; --tile-icon: url('${skill.icon}'); --delay: ${index * 0.03}s; --index: ${index};`}
+          >
+            <div class="tile-content">
+              <div class="tile-body">
+                <div class="tile-name">{skill.name}</div>
+                <div class="tile-category">{skill.category}</div>
+                <div class="tile-description">{skill.description}</div>
+              </div>
+              <div class="tile-glitch"></div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Stats Footer -->
+      <div class="matrix-footer">
+        <div class="terminal-prompt">
+          <span class="prompt-symbol">$</span>
+          <span class="prompt-text">scan --all --verbose</span>
+          <span class="prompt-cursor">█</span>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <span class="stat-number">{skills.length}</span>
+            <span class="stat-label">MODULES</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">{getTotalSkills}</span>
+            <span class="stat-label">PACKAGES</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">{Math.round(getTotalSkills / skills.length)}</span>
+            <span class="stat-label">AVG/MOD</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Background Effects -->
+  <div class="matrix-effects">
+    <div class="matrix-rain"></div>
+    <div class="grid-pattern"></div>
+    <div class="scanlines"></div>
+  </div>
+</div>
+
+<style>
+  .skill-matrix {
+    min-height: 700px;
+    padding: 0;
+    background: #131613;
+    border: 1px solid rgba(86, 182, 194, 0.2);
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Geist Mono', monospace;
+  }
+
+  /* Terminal Header */
+  .matrix-header {
+    background: #282c34;
+    border-bottom: 1px solid rgba(86, 182, 194, 0.1);
+  }
+
+  .terminal-header {
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .terminal-buttons {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .terminal-button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  .terminal-button.close {
+    background: #e06c75;
+  }
+
+  .terminal-button.minimize {
+    background: #fbbf24;
+  }
+
+  .terminal-button.maximize {
+    background: #4ade80;
+  }
+
+  .terminal-title {
+    color: #56b6c2;
+    font-size: 0.875rem;
+    font-weight: 600;
+    flex: 1;
+    text-align: center;
+  }
+
+  /* Main Layout Container */
+  .layout-container {
+    display: flex;
+    flex: 1;
+    min-height: 600px;
+  }
+
+  /* Left Sidebar - Categories */
+  .categories-sidebar {
+    width: 240px;
+    background: rgba(19, 22, 19, 0.9);
+    border-right: 1px solid rgba(86, 182, 194, 0.1);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sidebar-header {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(86, 182, 194, 0.1);
+  }
+
+  .sidebar-title {
+    color: #56b6c2;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.25rem;
+  }
+
+  .sidebar-stats {
+    color: #9ca3af;
+    font-size: 0.625rem;
+    font-family: monospace;
+  }
+
+  .categories-list {
+    flex: 1;
+    padding: 0.5rem;
+    overflow-y: auto;
+  }
+
+  .category-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    background: rgba(40, 44, 52, 0.5);
+    border: 1px solid rgba(86, 182, 194, 0.1);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0;
+    animation: slideInLeft 0.5s ease-out forwards;
+    animation-delay: var(--delay);
+  }
+
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .category-item:hover {
+    background: rgba(40, 44, 52, 0.8);
+    border-color: var(--category-color);
+    transform: translateX(2px);
+  }
+
+  .category-indicator {
+    width: 8px;
+    height: 8px;
+    background: var(--category-color);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--category-color);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .category-info {
+    flex: 1;
+  }
+
+  .category-name {
+    color: var(--category-color);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+  }
+
+  .category-count {
+    color: #9ca3af;
+    font-size: 0.75rem;
+    font-family: monospace;
+  }
+
+  /* Right Content Area */
+  .content-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .content-header {
+    padding: 1rem 1.5rem;
+    background: rgba(86, 182, 194, 0.05);
+    border-bottom: 1px solid rgba(86, 182, 194, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .legend-header {
+    color: #56b6c2;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .legend-items {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  .legend-dot:hover {
+    transform: scale(1.2);
+  }
+
+  /* Skill Grid - Smaller Cards */
+  .skill-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 0.75rem;
+    padding: 1rem;
+    flex: 1;
+  }
+
+  .skill-tile {
+    opacity: 0;
+    animation: tileAppear 0.6s ease-out forwards;
+    animation-delay: var(--delay);
+  }
+
+  @keyframes tileAppear {
+    0% {
+      opacity: 0;
+      transform: translateY(15px) scale(0.9);
+    }
+    50% {
+      transform: translateY(-3px) scale(1.02);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .tile-content {
+    background: rgba(40, 44, 52, 0.9);
+    border: 1px solid rgba(86, 182, 194, 0.2);
+    border-radius: 6px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    height: 100%;
+  }
+
+  .tile-content:hover {
+    border-color: var(--tile-color);
+    background: rgba(40, 44, 52, 0.95);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(var(--tile-color), 0.2);
+    position: relative;
+  }
+
+  .tile-content:hover::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    background-image: var(--tile-icon);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.25;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .tile-body {
+    padding: 1rem 0.75rem;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    height: 100%;
+  }
+
+  .tile-name {
+    color: var(--tile-color);
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .tile-category {
+    color: #9ca3af;
+    font-size: 0.625rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    background: rgba(19, 22, 19, 0.6);
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    border: 1px solid rgba(86, 182, 194, 0.1);
+    width: fit-content;
+  }
+
+  .tile-description {
+    color: #abb2bf;
+    font-size: 0.7rem;
+    font-family: monospace;
+    line-height: 1.3;
+  }
+
+  .tile-glitch {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--tile-color);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.1s ease;
+  }
+
+  .tile-content:hover .tile-glitch {
+    animation: glitch 0.3s ease-out;
+  }
+
+  @keyframes glitch {
+    0%, 100% { opacity: 0; }
+    20% { opacity: 0.1; transform: translateX(-2px); }
+    40% { opacity: 0.05; transform: translateX(2px); }
+    60% { opacity: 0.1; transform: translateX(-1px); }
+    80% { opacity: 0.05; transform: translateX(1px); }
+  }
+
+  /* Stats Footer */
+  .matrix-footer {
+    padding: 1.5rem;
+    background: rgba(19, 22, 19, 0.8);
+    border-top: 1px solid rgba(86, 182, 194, 0.1);
+  }
+
+  .terminal-prompt {
+    color: #56b6c2;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .prompt-symbol {
+    color: #56b6c2;
+    font-weight: 700;
+  }
+
+  .prompt-text {
+    color: #abb2bf;
+  }
+
+  .prompt-cursor {
+    animation: blink 1s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 1rem;
+  }
+
+  .stat-item {
+    text-align: center;
+    padding: 0.75rem;
+    background: rgba(40, 44, 52, 0.8);
+    border: 1px solid rgba(86, 182, 194, 0.2);
+    border-radius: 4px;
+  }
+
+  .stat-number {
+    display: block;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--tile-color, #56b6c2);
+    line-height: 1;
+  }
+
+  .stat-label {
+    display: block;
+    color: #9ca3af;
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 0.25rem;
+  }
+
+  /* Background Effects */
+  .matrix-effects {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .matrix-rain {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(86, 182, 194, 0.02) 2px,
+      rgba(86, 182, 194, 0.02) 4px
+    );
+    animation: matrixRain 20s linear infinite;
+  }
+
+  @keyframes matrixRain {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(20px); }
+  }
+
+  .grid-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+      linear-gradient(rgba(86, 182, 194, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(86, 182, 194, 0.02) 1px, transparent 1px);
+    background-size: 25px 25px;
+  }
+
+  .scanlines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      transparent 50%,
+      rgba(86, 182, 194, 0.01) 51%
+    );
+    background-size: 100% 4px;
+    animation: scanlines 8s linear infinite;
+  }
+
+  @keyframes scanlines {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(10px); }
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .skill-matrix {
+      min-height: 600px;
+    }
+
+    .categories-sidebar {
+      width: 200px;
+    }
+
+    .skill-grid {
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 0.5rem;
+      padding: 0.75rem;
+    }
+
+    .tile-name {
+      font-size: 0.8rem;
+    }
+
+    .tile-description {
+      font-size: 0.625rem;
+    }
+
+    .stats-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+    }
+
+    .stat-number {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .layout-container {
+      flex-direction: column;
+    }
+
+    .categories-sidebar {
+      width: 100%;
+      height: 150px;
+      border-right: none;
+      border-bottom: 1px solid rgba(86, 182, 194, 0.1);
+    }
+
+    .categories-list {
+      display: flex;
+      gap: 0.5rem;
+      padding: 0.5rem;
+      overflow-x: auto;
+    }
+
+    .category-item {
+      min-width: 120px;
+    }
+
+    .skill-grid {
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+
+    .content-header {
+      padding: 0.75rem 1rem;
+    }
+
+    .legend-header {
+      font-size: 0.75rem;
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+    }
+  }
+</style>
