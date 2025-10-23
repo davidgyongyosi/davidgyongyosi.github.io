@@ -1,0 +1,33 @@
+---
+import ProjectCard from "../ProjectCard.astro";
+import SectionHeader from "../SectionHeader.astro";
+import type { Project } from "../../data/projects";
+
+export interface Props {
+  projects: Project[];
+  showViewAll?: boolean;
+}
+
+const { projects, showViewAll = false } = Astro.props;
+---
+
+<section id="projects">
+  <div class="p-3 sm:p-8">
+    <SectionHeader
+      title="projects"
+      linkHref={showViewAll ? "/works/" : undefined}
+      linkText={showViewAll ? "View all projects" : undefined}
+    />
+    <div class="flex flex-wrap gap-2 sm:gap-4">
+      {projects.map((project) => (
+        <ProjectCard
+          title={project.title}
+          description={project.description}
+          link={project.link}
+          linkText={project.linkText}
+          tags={project.tags}
+        />
+      ))}
+    </div>
+  </div>
+</section>

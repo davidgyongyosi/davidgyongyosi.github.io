@@ -1,0 +1,96 @@
+@use '../abstracts' as *;
+
+// Page-level layout styles
+
+// Page section wrapper
+.page-section {
+  margin-bottom: 4rem;
+
+  @include respond-to(md) {
+    margin-bottom: 5rem;
+  }
+}
+
+// Page titles
+.page-title {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  margin-bottom: 3rem;
+  font-weight: 500;
+
+  .heading-prefix {
+    color: $primary-color;
+    font-weight: 400;
+    padding-right: 0.25rem;
+  }
+}
+
+// About page specific styles
+.about-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  margin-top: 2rem;
+
+  @include respond-to(md) {
+    flex-direction: row;
+    gap: 3rem;
+    align-items: flex-start;
+  }
+}
+
+.about-image {
+  flex-shrink: 0;
+
+  .profile-image {
+    border-bottom: 2px solid rgba($primary-color, 0.5);
+    border-radius: 4px;
+  }
+}
+
+.about-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  font-size: clamp(0.875rem, 2vw, 1.125rem);
+  line-height: 1.8;
+
+  p {
+    margin: 0;
+  }
+
+  .intro-text {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    font-weight: 500;
+  }
+
+  .conclusion-text {
+    margin-top: 1rem;
+    font-weight: 500;
+  }
+}
+
+// Projects page specific styles
+.projects-category {
+  margin-bottom: 3rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.projects-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+
+  @include respond-to(sm) {
+    gap: 1.5rem;
+  }
+
+  @include respond-to(md) {
+    gap: 2rem;
+  }
+}

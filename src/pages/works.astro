@@ -1,112 +1,52 @@
 ---
-import ProjectCard from "../components/ProjectCard.astro";
 import MainLayout from "../layouts/MainLayout.astro";
+import SectionHeader from "../components/SectionHeader.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import { getProjectsByCategory } from "../data/projects";
+
+// Get projects by category
+const largeProjects = getProjectsByCategory('large');
+const smallProjects = getProjectsByCategory('small');
+const inProgressProjects = getProjectsByCategory('in-progress');
 ---
 
 <MainLayout title="Works">
-	<div class="p-10 sm:p-26">
-		<section class="pb-12 pt-12">
-			<h1 class="text-xl sm:text-3xl">
-				<span class="heading-prefix">/</span>projects 
-			  </h1>
-			<div class="flex justify-between gap-6 items-center pt-10 pb-10">
-			  <div class="flex gap-6 items-center flex-grow">
-				<h1 class="sm:text-2xl">
-				  <span class="heading-prefix">#</span>large-projects
-				</h1>
-				<hr class="w-1/2" />
-			  </div>
-			</div>
-			<div class="flex flex-wrap gap-5">
-				<ProjectCard
-				title="Thesis work"
-				description="Full-stack web app for school navigation using 3D assets and Augmented Reality"
-				link="https://github.com/davidgyongyosi/davidgyongyosi_thesis"
-				linkText="github"
-				tags={["Asp.net", "Angular", "Ionic"]}
-			  />
-			  <ProjectCard
-				title="School Group Project (ProgGame)"
-				description="Full-stack web app about learning to code with gamification"
-				link="https://github.com/bprof-spec-codes/proggame"
-				linkText="github"
-				tags={["Asp.net", "Angular", "SCRUM"]}
-			  />
-			  <ProjectCard
-				title="School Group Project (SpecChat)"
-				description="Full-stack web app clone of slack"
-				link="https://github.com/bprof-spec-codes/specchat"
-				linkText="github"
-				tags={["Asp.net", "Angular", "SCRUM", "Frontend"]}
-			  />
-			  </div>
-		</section>
-		
-		<section class="pb-12">
-			<div class="flex justify-between gap-6 items-center pt-10 pb-10">
-				<div class="flex gap-6 items-center flex-grow">
-				  <h1 class="sm:text-2xl">
-					<span class="heading-prefix">#</span>small-projects
-				  </h1>
-				  <hr class="w-1/2" />
-				</div>
-			  </div>
-			  <div class="flex flex-wrap gap-5">
-				<ProjectCard
-				title="My portfolio"
-				description="You are currently browsing my portfolio website"
-				link="https://github.com/davidgyongyosi/davidgyongyosi.github.io"
-				linkText="github"
-				tags={["Astro", "SCSS", "JS", "Tailwind"]}
-			  />
-			  <ProjectCard
-				title="ADT School Project"
-				description="Application for learning data structures and algorithms (advanced development techniques)"
-				link="https://github.com/davidgyongyosi/davidgyongyosi_ADT_2022231"
-				linkText="github"
-				tags={["Asp.net Core", "EF Core", "xUnit"]}
-			  />
-			  <ProjectCard
-				title="ASP School Project"
-				description="A game database application with ASP.NET Core MVC"
-				link="https://github.com/davidgyongyosi/davidgyongyosi_ASP_2022231"
-				linkText="github"
-				tags={["Asp.net Core", "EF Core", "Razor Pages"]}
-			  />
-			  <ProjectCard
-				title="Investment App"
-				description="A crypto investment app with Asp.net & Angular"
-				link="https://github.com/davidgyongyosi/Investment-app"
-				linkText="github"
-				tags={["Asp.net", "Angular", "Tailwind"]}
-			  />
-			  </div>
-		</section>
+  <section class="page-section">
+    <h1 class="page-title">
+      <span class="heading-prefix">/</span>projects
+    </h1>
 
-		<section class="pb-12">
-			<div class="flex justify-between gap-6 items-center pt-10 pb-10">
-				<div class="flex gap-6 items-center flex-grow">
-				  <h1 class="sm:text-2xl">
-					<span class="heading-prefix">#</span>in-progress
-				  </h1>
-				  <hr class="w-1/2" />
-				</div>
-			  </div>
-			  <div class="flex flex-wrap gap-5">
-				<ProjectCard
-				title="Rpg Game Project"
-				description="My rpg inspired by Spiral Knights is currently in development.."
-				link="https://www.spiralknights.com"
-				linkText="in_progress"
-				tags={["Godot", "GdScript", "3D Engine", "RPG"]}
-			  />
-			  <ProjectCard
-			  title="Component Library"
-			  description="An Angular component library is currently under design..."
-			  link="https://github.com/davidgyongyosi/Unnamed-UI"
-			  linkText="in_progress"
-			  tags={["Typscript", "CSS", "JavaScript"]}/>
-			  </div>
-		</section>
-	</div>
+    {largeProjects.length > 0 && (
+      <div class="projects-category">
+        <SectionHeader title="large-projects" showLine={true} />
+        <div class="projects-grid">
+          {largeProjects.map((project) => (
+            <ProjectCard {...project} />
+          ))}
+        </div>
+      </div>
+    )}
+
+    {smallProjects.length > 0 && (
+      <div class="projects-category">
+        <SectionHeader title="small-projects" showLine={true} />
+        <div class="projects-grid">
+          {smallProjects.map((project) => (
+            <ProjectCard {...project} />
+          ))}
+        </div>
+      </div>
+    )}
+
+    {inProgressProjects.length > 0 && (
+      <div class="projects-category">
+        <SectionHeader title="in-progress" showLine={true} />
+        <div class="projects-grid">
+          {inProgressProjects.map((project) => (
+            <ProjectCard {...project} />
+          ))}
+        </div>
+      </div>
+    )}
+  </section>
 </MainLayout>

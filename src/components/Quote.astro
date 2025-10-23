@@ -1,0 +1,20 @@
+---
+// Quote component for displaying quotes
+export interface Props {
+  text: string;
+  author: string;
+}
+
+const { text, author } = Astro.props;
+---
+
+<div class="flex justify-center pt-7">
+  <div>
+    <p class="p-2 sm:p-6 text-base sm:text-xl border-gray-500 border-2">
+      {text}
+    </p>
+    <p class="p-2 sm:p-6 text-base sm:text-xl border-gray-500 border-2 w-fit border-t-0">
+      - {author}
+    </p>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+// Base resets and global styles
+@use '../abstracts' as *;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root,
+* {
+  color: $text-light;
+  font-family: $font-mono;
+}
+
+html {
+  background-color: $background-dark;
+}
+
+body,
+html {
+  color: $text-light;
+  margin: 0;
+  padding: 0;
+}
+
+// Grid background effect
+body::before {
+  content: "";
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  background:
+    linear-gradient(90deg, $background-grid 1px, transparent 1px) 0 0 / 50px 50px,
+    linear-gradient($background-grid 1px, transparent 1px) 0 0 / 50px 50px;
+  top: 0;
+  z-index: $z-background;
+  -webkit-mask: linear-gradient(-360deg, transparent 40%, white);
+  mask: linear-gradient(-360deg, transparent 30%, white);
+}

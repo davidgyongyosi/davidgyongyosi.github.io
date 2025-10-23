@@ -9,44 +9,29 @@ export interface Props {
 }
 
 const { category, skills } = Astro.props;
+const skillCount = skills.length;
 ---
 
-<div class="skill-card border-gray-500 border-2 shadow-black shadow-md">
-  <h3 class="text-lg sm:text-2xl">{category}</h3>
-  <div class="flex flex-wrap gap-2">
-    {skills.map(skill => (
-      <div class="flex flex-row flex-wrap gap-2">
-        <span class="border-2 border-gray-600 px-2">{skill.name}</span>
+<a href="/about" class="skill-card">
+  <div class="card-content">
+    <div class="skill-card-header">
+      <h3 class="skill-category">{category}</h3>
+      <span class="skill-count">{skillCount}</span>
+    </div>
+
+    <div class="skills-grid">
+      {skills.map(skill => (
+        <div class="skill-item">
+          <span class="skill-wrapper">
+            <span class="skill-name">{skill.name}</span>
+          </span>
+        </div>
+      ))}
+      <div class="skill-item skill-more">
+        <span class="skill-wrapper">
+          <span class="skill-name">& more...</span>
+        </span>
       </div>
-    ))}
-    <div class="skill">
-      <span class="skill-name">...</span>
     </div>
   </div>
-</div>
-
-<style>
-  .skill-card {
-    background-color: transparent;
-    border-style: solid;
-    border-radius: 8px;
-    margin: .5rem;
-    height: 235px;
-    width: 235px;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding: 20px;
-    gap: 10px;
-
-    @media screen and (max-width: 640px) {
-      width: 100%;
-    }
-  }
-
-  h3 {
-    color: #8957f6;
-  }
-
-</style>
+</a>
