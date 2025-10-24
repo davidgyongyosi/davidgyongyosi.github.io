@@ -1,6 +1,4 @@
 ---
-import { Image } from "astro:assets";
-import heroImage from "../assets/hero.png";
 import MainLayout from "../layouts/MainLayout.astro";
 import SkillsSection from "../components/sections/SkillsSection.astro";
 import { skillsData } from "../data/skills";
@@ -13,13 +11,7 @@ import { skillsData } from "../data/skills";
     </h1>
     <div class="about-content">
       <div class="about-image">
-        <Image
-          src={heroImage}
-          alt="David Gyongyosi"
-          class="profile-image"
-          width={300}
-          height={300}
-        />
+        <img src="/src/assets/hero-memoji.png" alt="David Gyongyosi" class="profile-image" />
       </div>
       <div class="about-text">
         <p class="intro-text">Hello, i'm <span>David!</span> 👋🏼</p>

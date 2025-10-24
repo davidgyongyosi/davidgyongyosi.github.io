@@ -1,5 +1,7 @@
 ---
 // ProjectCard.astro
+import Button from "./Button.astro";
+
 export interface Props {
   title: string;
   description: string;
@@ -12,52 +14,71 @@ export interface Props {
   highlights?: string[];
 }
 
-const { title, description, link, linkText, tags, year, status, role, highlights } = Astro.props;
+const { title, description, link, linkText, tags, year, status } = Astro.props;
+
+// Get status icon
+const getStatusIcon = (status: string): string => {
+  switch (status) {
+    case 'completed': return '✓';
+    case 'in-progress': return '⟳';
+    case 'ongoing': return '◉';
+    default: return '';
+  }
+};
+
 ---
 
 <article class="project-card">
   <div class="card-content">
-    <div class="card-header">
-      <div class="title-row">
-        <h3 class="card-title">{title}</h3>
-        {year && <span class="card-year">{year}</span>}
-      </div>
-      {(status || role) && (
-        <div class="meta-row">
+    <div class="card-main">
+      <!-- Left side: Title and tech stack -->
+      <div class="card-left">
+        <div class="title-section">
+          <h3 class="card-title">{title}</h3>
           {status && (
-            <span class={`status-badge status-${status}`}>
-              {status === 'completed' ? '✓ Completed' :
-               status === 'in-progress' ? '⟳ In Progress' :
-               '◉ Ongoing'}
+            <span class={`status-indicator status-${status}`} title={status}>
+              {getStatusIcon(status)}
             </span>
           )}
-          {role && <span class="role-badge">{role}</span>}
+        </div>
+
+        <!-- Tech stack as visual element -->
+        <div class="tech-stack">
+          {tags.slice(0, 8).map((tag) => (
+            <span class="tech-tag">
+              <span class="tag-content">{tag}</span>
+            </span>
+          ))}
+          {tags.length > 8 && (
+            <span class="tech-tag more-tags">
+              <span class="tag-content">+{tags.length - 8} more</span>
+            </span>
+          )}
+        </div>
+      </div>
+
+      <!-- Right side: Year badge -->
+      {year && (
+        <div class="card-right">
+          <span class="year-badge">{year}</span>
         </div>
       )}
     </div>
 
+    <!-- Description -->
     <p class="card-description">{description}</p>
 
-    {highlights && highlights.length > 0 && (
-      <ul class="highlights-list">
-        {highlights.map((highlight) => (
-          <li>{highlight}</li>
-        ))}
-      </ul>
-    )}
-
-    <div class="card-footer">
-      <div class="tags-container">
-        {tags.map((tag) => (
-          <span class="tag-wrapper">
-            <span class="tag-content">{tag}</span>
-          </span>
-        ))}
-      </div>
-
-      <a href={link} class="card-link" target="_blank" rel="noreferrer noopener">
-        <span>{linkText}() <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
-      </a>
-    </div>
+    <!-- Footer with CTA -->
+    <footer class="card-footer">
+      <Button
+        href={link}
+        variant="secondary"
+        target="_blank"
+        rel="noreferrer noopener"
+        icon="fa-arrow-up-right-from-square"
+      >
+        {linkText}()
+      </Button>
+    </footer>
   </div>
 </article>

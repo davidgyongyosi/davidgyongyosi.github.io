@@ -1,0 +1,553 @@
+---
+import type { SkillCategory } from "../data/skills";
+
+export interface Props {
+  skills: SkillCategory[];
+}
+
+const { skills } = Astro.props;
+
+// Get category colors and icons
+const getCategoryColor = (category: string): string => {
+  const colors: Record<string, string> = {
+    'Languages': '#56b6c2',     // cyan
+    'Database': '#4ade80',      // green
+    'Frameworks': '#fbbf24',    // yellow
+    'Tools': '#f87171',         // red
+    'Others': '#a78bfa'         // purple
+  };
+  return colors[category] || '#56b6c2';
+};
+
+const getCategoryIcon = (category: string): string => {
+  const icons: Record<string, string> = {
+    'Languages': '⚡',
+    'Database': '💾',
+    'Frameworks': '🔧',
+    'Tools': '🛠️',
+    'Others': '📦'
+  };
+  return icons[category] || '📂';
+};
+
+const getTotalSkills = skills.reduce((total, category) => total + category.skills.length, 0);
+
+---
+
+<section class="skill-terminal" id="skills">
+  <div class="terminal-container">
+    <!-- Terminal Window -->
+    <div class="terminal-window">
+      <!-- Terminal Header -->
+      <div class="terminal-header">
+        <div class="terminal-controls">
+          <div class="control control-close"></div>
+          <div class="control control-minimize"></div>
+          <div class="control control-maximize"></div>
+        </div>
+        <div class="terminal-title">
+          <span class="title-icon">💻</span>
+          <span class="title-text">david@tech-stack: ~</span>
+        </div>
+      </div>
+
+      <!-- Terminal Body -->
+      <div class="terminal-body">
+        <!-- Command Line -->
+        <div class="command-line">
+          <span class="prompt">david@portfolio:~$</span>
+          <span class="command">ls skills/</span>
+        </div>
+
+        <!-- Directory Listing -->
+        <div class="directory-listing">
+          {skills.map((category, index) => (
+            <div
+              class="directory-item"
+              style={`--category-color: ${getCategoryColor(category.category)}; --delay: ${index * 0.2}s;`}
+            >
+              <div class="directory-info">
+                <span class="directory-icon">{getCategoryIcon(category.category)}</span>
+                <span class="directory-name">{category.category.toLowerCase()}/</span>
+                <span class="directory-meta">
+                  <span class="file-count">{category.skills.length} items</span>
+                  <span class="timestamp">Oct 2024</span>
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <!-- Commands for categories -->
+        <div class="command-commands">
+          {skills.map((category, index) => (
+            <div
+              class="command-category"
+              style={`--category-color: ${getCategoryColor(category.category)}; --delay: ${skills.length * 0.2 + index * 0.3}s;`}
+            >
+              <div class="command-line">
+                <span class="prompt">david@portfolio:~$</span>
+                <span class="command">cat skills/{category.category.toLowerCase()}/*</span>
+              </div>
+              <div class="file-contents">
+                {category.skills.map((skill, skillIndex) => (
+                  <div
+                    class="file-line"
+                    style={`--delay: ${skills.length * 0.2 + index * 0.3 + skillIndex * 0.1}s;`}
+                  >
+                    <span class="line-number">{String(skillIndex + 1).padStart(2, '0')}</span>
+                    <span class="line-content">
+                      <span class="syntax-keyword">const</span>
+                      <span class="syntax-variable">{skill.name.toLowerCase().replace(/\./g, '')}</span>
+                      <span class="syntax-operator">=</span>
+                      <span class="syntax-string">'{skill.name}'</span>
+                      <span class="syntax-semicolon">;</span>
+                    </span>
+                    <span class="line-comment">// proficiency: expert</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <!-- Summary Command -->
+        <div class="command-summary" style="animation-delay: 3s;">
+          <div class="command-line">
+            <span class="prompt">david@portfolio:~$</span>
+            <span class="command">wc -l skills/*/*</span>
+          </div>
+          <div class="summary-output">
+            <pre>
+  <span class="summary-text">
+   ╔══════════════════════════════════════╗
+   ║     TECH STACK SUMMARY                 ║
+   ╠══════════════════════════════════════╣
+   ║  Total Categories: <span class="highlight">{skills.length}</span>                ║
+   ║  Total Skills: <span class="highlight">{getTotalSkills}</span>                     ║
+   ║  Avg per Category: <span class="highlight">{Math.round(getTotalSkills / skills.length)}</span>                 ║
+   ╚══════════════════════════════════════╝
+  </span>
+            </pre>
+          </div>
+        </div>
+
+        <!-- Interactive Prompt -->
+        <div class="interactive-prompt">
+          <span class="prompt">david@portfolio:~$</span>
+          <span class="cursor">_</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Terminal Controls -->
+    <div class="terminal-controls-panel">
+      <button class="terminal-btn" id="runAll">
+        <i class="fa-solid fa-play"></i>
+        <span>Run All</span>
+      </button>
+      <button class="terminal-btn" id="clearTerminal">
+        <i class="fa-solid fa-eraser"></i>
+        <span>Clear</span>
+      </button>
+      <button class="terminal-btn" id="exportSkills">
+        <i class="fa-solid fa-download"></i>
+        <span>Export</span>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const runAllBtn = document.getElementById('runAll') as HTMLButtonElement;
+      const clearBtn = document.getElementById('clearTerminal') as HTMLButtonElement;
+      const exportBtn = document.getElementById('exportSkills') as HTMLButtonElement;
+
+      runAllBtn?.addEventListener('click', () => {
+        const animatedElements = document.querySelectorAll('.directory-item, .command-category, .command-summary');
+        animatedElements.forEach(el => {
+          const element = el as HTMLElement;
+          element.style.animation = 'none';
+          setTimeout(() => {
+            element.style.animation = '';
+          }, 10);
+        });
+      });
+
+      clearBtn?.addEventListener('click', () => {
+        const terminalBody = document.querySelector('.terminal-body');
+        if (terminalBody) {
+          terminalBody.innerHTML = `
+            <div class="command-line">
+              <span class="prompt">david@portfolio:~$</span>
+              <span class="command">clear</span>
+            </div>
+            <div class="interactive-prompt">
+              <span class="prompt">david@portfolio:~$</span>
+              <span class="cursor">_</span>
+            </div>
+          `;
+        }
+      });
+
+      exportBtn?.addEventListener('click', () => {
+        // Create skills data object from the DOM
+        const skillsData = Array.from(document.querySelectorAll('.command-category')).map((category) => {
+          const categoryName = category.querySelector('.command')?.textContent?.match(/skills\/(\w+)/)?.[1] || '';
+          const skillElements = category.querySelectorAll('.syntax-string');
+          const skills = Array.from(skillElements).map(el => el.textContent?.replace(/'/g, '') || '');
+          return { category: categoryName, skills };
+        });
+
+        const dataStr = JSON.stringify(skillsData, null, 2);
+        const dataBlob = new Blob([dataStr], { type: 'application/json' });
+        const url = URL.createObjectURL(dataBlob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'tech-stack.json';
+        link.click();
+        URL.revokeObjectURL(url);
+      });
+    });
+  </script>
+</section>
+
+<style>
+  .skill-terminal {
+    min-height: 600px;
+    padding: 2rem;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .terminal-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Terminal Window */
+  .terminal-window {
+    background: #1e1e1e;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    border: 1px solid #333;
+  }
+
+  /* Terminal Header */
+  .terminal-header {
+    background: linear-gradient(180deg, #2d2d2d 0%, #1e1e1e 100%);
+    padding: 0.75rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #333;
+  }
+
+  .terminal-controls {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .control {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  .control-close { background: #ff5f57; }
+  .control-minimize { background: #ffbd2e; }
+  .control-maximize { background: #28ca42; }
+
+  .terminal-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #e5e5e5;
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.875rem;
+  }
+
+  .title-icon {
+    font-size: 1rem;
+  }
+
+  /* Terminal Body */
+  .terminal-body {
+    padding: 1.5rem;
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    background: #1e1e1e;
+    min-height: 400px;
+    max-height: 500px;
+    overflow-y: auto;
+  }
+
+  .terminal-body::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .terminal-body::-webkit-scrollbar-track {
+    background: #2d2d2d;
+  }
+
+  .terminal-body::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 4px;
+  }
+
+  .command-line {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .prompt {
+    color: #56b6c2;
+    margin-right: 0.5rem;
+  }
+
+  .command {
+    color: #e5e5e5;
+  }
+
+  /* Directory Listing */
+  .directory-listing {
+    margin-bottom: 2rem;
+  }
+
+  .directory-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    opacity: 0;
+    animation: fadeInLeft 0.6s ease-out forwards;
+    animation-delay: var(--delay);
+  }
+
+  @keyframes fadeInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .directory-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+  }
+
+  .directory-info:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .directory-icon {
+    font-size: 1.25rem;
+  }
+
+  .directory-name {
+    color: var(--category-color);
+    font-weight: 600;
+    margin-right: 1rem;
+  }
+
+  .directory-meta {
+    color: #666;
+    font-size: 0.75rem;
+  }
+
+  .file-count {
+    margin-right: 1rem;
+  }
+
+  /* File Contents */
+  .command-category {
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeIn 0.8s ease-out forwards;
+    animation-delay: var(--delay);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .file-contents {
+    margin-left: 2rem;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-left: 3px solid var(--category-color);
+    border-radius: 0 4px 4px 0;
+  }
+
+  .file-line {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.25rem;
+    opacity: 0;
+    animation: slideIn 0.4s ease-out forwards;
+    animation-delay: var(--delay);
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateX(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .line-number {
+    color: #666;
+    margin-right: 1rem;
+    font-size: 0.75rem;
+  }
+
+  .line-content {
+    flex: 1;
+  }
+
+  .syntax-keyword { color: #c678dd; }
+  .syntax-variable { color: #e06c75; }
+  .syntax-operator { color: #56b6c2; }
+  .syntax-string { color: #98c379; }
+  .syntax-semicolon { color: #abb2bf; }
+
+  .line-comment {
+    color: #5c6370;
+    font-style: italic;
+    margin-left: 1rem;
+  }
+
+  /* Summary */
+  .command-summary {
+    opacity: 0;
+    animation: fadeIn 1s ease-out forwards;
+    margin-bottom: 1rem;
+  }
+
+  .summary-output {
+    margin-left: 2rem;
+    padding: 1rem;
+    background: rgba(86, 182, 194, 0.1);
+    border: 1px solid rgba(86, 182, 194, 0.3);
+    border-radius: 4px;
+  }
+
+  .summary-text {
+    color: #e5e5e5;
+    font-size: 0.875rem;
+  }
+
+  .highlight {
+    color: #56b6c2;
+    font-weight: bold;
+  }
+
+  /* Interactive Prompt */
+  .interactive-prompt {
+    display: flex;
+    align-items: center;
+  }
+
+  .cursor {
+    color: #56b6c2;
+    animation: blink 1s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+
+  /* Terminal Controls */
+  .terminal-controls-panel {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .terminal-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: rgba(86, 182, 194, 0.1);
+    border: 1px solid rgba(86, 182, 194, 0.3);
+    border-radius: 8px;
+    color: #56b6c2;
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .terminal-btn:hover {
+    background: rgba(86, 182, 194, 0.2);
+    border-color: #56b6c2;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(86, 182, 194, 0.2);
+  }
+
+  .terminal-btn i {
+    font-size: 0.875rem;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .skill-terminal {
+      min-height: 500px;
+      padding: 1rem;
+    }
+
+    .terminal-body {
+      padding: 1rem;
+      font-size: 0.75rem;
+    }
+
+    .directory-info {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.25rem;
+    }
+
+    .file-contents {
+      margin-left: 1rem;
+    }
+
+    .summary-output {
+      margin-left: 1rem;
+    }
+
+    .terminal-controls-panel {
+      gap: 0.5rem;
+    }
+
+    .terminal-btn {
+      padding: 0.5rem 1rem;
+      font-size: 0.75rem;
+    }
+
+    .terminal-btn span {
+      display: none;
+    }
+  }
+</style>

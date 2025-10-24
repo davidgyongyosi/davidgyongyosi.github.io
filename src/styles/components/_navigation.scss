@@ -13,24 +13,7 @@
   }
 }
 
-.menu-toggle {
-  background: none;
-  border: none;
-  cursor: move;
-  z-index: $z-navigation-hover;
-  color: $text-light;
-
-  &:focus-visible {
-    outline: 2px solid $primary-color;
-    outline-offset: 4px;
-  }
-
-  .drag-icon {
-    font-size: 1.2rem;
-    user-select: none;
-  }
-}
-
+// Menu container
 .menu {
   position: relative;
   display: flex;
@@ -42,42 +25,5 @@
   @include respond-to(sm) {
     font-size: 14px;
     gap: 0.3rem;
-  }
-}
-
-.corner-border {
-  margin: 0.2rem 0.5rem;
-  padding: 0.2rem;
-  @include corner-border(7px, $primary-color);
-  transition: background-size $transition-fast, background-position $transition-fast;
-  text-decoration: none;
-
-  @include respond-to(sm) {
-    margin: 0.15rem 0.3rem;
-    padding: 0.15rem;
-  }
-
-  .menu-item {
-    padding: 0.5rem 1rem;
-    margin: 0.1rem;
-    background-color: $secondary-dark;
-    white-space: nowrap;
-
-    @include respond-to(sm) {
-      padding: 0.4rem 0.8rem;
-    }
-  }
-
-  &:hover {
-    background-size: 10px 10px;
-    background-position: 3px 3px, 3px calc(100% - 3px), calc(100% - 3px) 3px, calc(100% - 3px) calc(100% - 3px), 3px 3px, calc(100% - 3px) 3px, 3px calc(100% - 3px), calc(100% - 3px) calc(100% - 3px);
-  }
-
-  // Active state for current page
-  &.active {
-    .menu-item {
-      background-color: rgba($primary-color, 0.5);
-      box-shadow: 0 0 10px rgba($primary-color, 0.3);
-    }
   }
 }

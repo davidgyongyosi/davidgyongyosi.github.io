@@ -12,53 +12,57 @@ export const skillsData: SkillCategory[] = [
   {
     category: "Languages",
     skills: [
-      { name: "Typescript" },
+      { name: "TypeScript" },
       { name: "JavaScript" },
       { name: "C#" },
+      { name: "Go" },
+      { name: "Rust" },
       { name: "SQL" },
       { name: "HTML" },
-      { name: "CSS" },
     ]
   },
   {
-    category: "Database",
-    skills: [
-      { name: "MSSQL" },
-      { name: "MySQL" },
-      { name: "SQLite" },
-      { name: "MongoDB" },
-    ]
-  },
-  {
-    category: "Frameworks",
+    category: "Frameworks & Libraries",
     skills: [
       { name: "React" },
       { name: "Vue" },
       { name: "Angular" },
       { name: "Astro" },
       { name: "Next.js" },
+      { name: "Svelte" },
+      { name: "Electron" },
+      { name: "Tauri" },
       { name: ".NET" }
     ]
   },
   {
-    category: "Tools",
+    category: "Database & Data",
+    skills: [
+      { name: "MSSQL" },
+      { name: "MySQL" },
+      { name: "SQLite" },
+      { name: "PostgreSQL" },
+    ]
+  },
+  {
+    category: "DevOps & Infrastructure",
+    skills: [
+      { name: "Docker" },
+      { name: "Kubernetes" },
+      { name: "Node.js" },
+    ]
+  },
+  {
+    category: "Tools & Styling",
     skills: [
       { name: "Git" },
       { name: "GitHub" },
       { name: "Figma" },
       { name: "VS Code" },
-      { name: "VSCodium" },
-      { name: "Neovim" }
-    ]
-  },
-  {
-    category: "Others",
-    skills: [
-      { name: "Node.js" },
-      { name: "Tailwind" },
-      { name: "Docker" },
-      { name: "Linux" },
+      { name: "Neovim" },
+      { name: "CSS" },
       { name: "SCSS" },
+      { name: "Tailwind" },
     ]
   }
 ];

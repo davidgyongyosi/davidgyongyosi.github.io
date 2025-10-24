@@ -5,6 +5,7 @@ import ProjectsSection from "../components/sections/ProjectsSection.astro";
 import SkillsSection from "../components/sections/SkillsSection.astro";
 import AboutSection from "../components/sections/AboutSection.astro";
 import Quote from "../components/Quote.astro";
+import IDETerminal from "../components/IDETerminal.astro";
 import { getFeaturedProjects } from "../data/projects";
 import { skillsData } from "../data/skills";
 
@@ -14,19 +15,28 @@ const featuredProjects = getFeaturedProjects();
 
 <MainLayout title="Home">
   <HeroSection
-    title="I am an <span>enthusiastic</span> web developer."
-    subtitle="Currently working as a Frontend Developer."
+    title="I am a <span>dedicated</span> web developer."
+    subtitle="Creating modern, responsive web experiences with clean code and thoughtful design."
     email="david.gyongyosi@majin.dev"
   />
 
-  <Quote
-    text="One of my most productive days was throwing away 1000 lines of code."
-    author="Ken Thompson"
-  />
+  <div class="hero-quote-container">
+    <div class="hero-image-side">
+      <img src="/src/assets/hero-memoji.png" alt="Hero" class="hero-image-side-content" />
+    </div>
+    <div class="quote-content">
+      <Quote
+        text="One of my most productive days was throwing away 1000 lines of code."
+        author="Ken Thompson"
+      />
+    </div>
+  </div>
+
+  <div class="section-spacing">
+    <IDETerminal skills={skillsData} />
+  </div>
 
   <ProjectsSection projects={featuredProjects} showViewAll={true} />
-
-  <SkillsSection skills={skillsData} />
 
   <AboutSection
     intro="Hello, i'm <span>David!</span> 👋🏼"
@@ -39,3 +49,79 @@ const featuredProjects = getFeaturedProjects();
     ctaLink="/about/"
   />
 </MainLayout>
+
+<style>
+  .section-spacing {
+    margin: 3rem 0;
+  }
+
+  .hero-quote-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin: 2rem 0;
+    padding: 0 1rem;
+  }
+
+  .hero-image-side {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-right: 0.5rem;
+  }
+
+  .hero-image-side-content {
+    width: auto;
+    height: auto;
+    max-height: 280px;
+    max-width: 320px;
+    object-fit: contain;
+  }
+
+  .quote-content {
+    flex: 1;
+    min-width: 0;
+    max-width: 500px;
+  }
+
+  /* Tablet breakpoint */
+  @media (max-width: 768px) {
+    .hero-quote-container {
+      gap: 2rem;
+      flex-direction: column;
+    }
+
+    .hero-image-side {
+      justify-content: center;
+      margin-right: 0;
+    }
+
+    .hero-image-side-content {
+      max-height: 240px;
+      max-width: 280px;
+    }
+
+    .quote-content {
+      width: 100%;
+    }
+  }
+
+  /* Mobile breakpoint */
+  @media (max-width: 640px) {
+    .hero-quote-container {
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .hero-image-side-content {
+      max-height: 200px;
+      max-width: 240px;
+    }
+
+    .quote-content {
+      width: 100%;
+    }
+  }
+</style>
