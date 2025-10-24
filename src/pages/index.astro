@@ -5,6 +5,7 @@ import ProjectsSection from "../components/sections/ProjectsSection.astro";
 import SkillsSection from "../components/sections/SkillsSection.astro";
 import AboutSection from "../components/sections/AboutSection.astro";
 import Quote from "../components/Quote.astro";
+import IDETerminal from "../components/IDETerminal.astro";
 import { getFeaturedProjects } from "../data/projects";
 import { skillsData } from "../data/skills";
 
@@ -31,9 +32,11 @@ const featuredProjects = getFeaturedProjects();
     </div>
   </div>
 
-  <ProjectsSection projects={featuredProjects} showViewAll={true} />
+  <div class="section-spacing">
+    <IDETerminal skills={skillsData} />
+  </div>
 
-  <SkillsSection skills={skillsData} />
+  <ProjectsSection projects={featuredProjects} showViewAll={true} />
 
   <AboutSection
     intro="Hello, i'm <span>David!</span> 👋🏼"
@@ -48,6 +51,10 @@ const featuredProjects = getFeaturedProjects();
 </MainLayout>
 
 <style>
+  .section-spacing {
+    margin: 3rem 0;
+  }
+
   .hero-quote-container {
     display: flex;
     align-items: center;

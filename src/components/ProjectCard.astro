@@ -30,37 +30,45 @@ const getStatusIcon = (status: string): string => {
 
 <article class="project-card">
   <div class="card-content">
-    <!-- Simplified header with title and status -->
-    <header class="card-header">
-      <div class="header-top">
-        <h3 class="card-title">{title}</h3>
-        {status && (
-          <span class={`status-indicator status-${status}`} title={status}>
-            {getStatusIcon(status)}
-          </span>
-        )}
-      </div>
-      {year && <span class="year-badge">{year}</span>}
-    </header>
+    <div class="card-main">
+      <!-- Left side: Title and tech stack -->
+      <div class="card-left">
+        <div class="title-section">
+          <h3 class="card-title">{title}</h3>
+          {status && (
+            <span class={`status-indicator status-${status}`} title={status}>
+              {getStatusIcon(status)}
+            </span>
+          )}
+        </div>
 
-    <!-- Tech stack as primary visual element -->
-    <div class="tech-stack">
-      {tags.slice(0, 6).map((tag) => (
-        <span class="tech-tag">
-          <span class="tag-content">{tag}</span>
-        </span>
-      ))}
-      {tags.length > 6 && (
-        <span class="tech-tag more-tags">
-          <span class="tag-content">+{tags.length - 6}</span>
-        </span>
+        <!-- Tech stack as visual element -->
+        <div class="tech-stack">
+          {tags.slice(0, 8).map((tag) => (
+            <span class="tech-tag">
+              <span class="tag-content">{tag}</span>
+            </span>
+          ))}
+          {tags.length > 8 && (
+            <span class="tech-tag more-tags">
+              <span class="tag-content">+{tags.length - 8} more</span>
+            </span>
+          )}
+        </div>
+      </div>
+
+      <!-- Right side: Year badge -->
+      {year && (
+        <div class="card-right">
+          <span class="year-badge">{year}</span>
+        </div>
       )}
     </div>
 
-    <!-- Concise description -->
+    <!-- Description -->
     <p class="card-description">{description}</p>
 
-    <!-- Single CTA link -->
+    <!-- Footer with CTA -->
     <footer class="card-footer">
       <Button
         href={link}

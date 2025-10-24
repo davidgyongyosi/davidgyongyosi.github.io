@@ -173,23 +173,25 @@ const allSkills = skills.flatMap(category =>
         </div>
       </div>
 
-      <!-- Skill Grid -->
-      <div class="skill-grid">
-        {allSkills.map((skill, index) => (
-          <div
-            class="skill-tile"
-            style={`--tile-color: ${skill.color}; --tile-icon: url('${skill.icon}'); --delay: ${index * 0.03}s; --index: ${index};`}
-          >
-            <div class="tile-content">
-              <div class="tile-body">
-                <div class="tile-name">{skill.name}</div>
-                <div class="tile-category">{skill.category}</div>
-                <div class="tile-description">{skill.description}</div>
+      <!-- Skill Grid Container (Scrollable) -->
+      <div class="skill-grid-container">
+        <div class="skill-grid">
+          {allSkills.map((skill, index) => (
+            <div
+              class="skill-tile"
+              style={`--tile-color: ${skill.color}; --tile-icon: url('${skill.icon}'); --delay: ${index * 0.03}s; --index: ${index};`}
+            >
+              <div class="tile-content">
+                <div class="tile-body">
+                  <div class="tile-name">{skill.name}</div>
+                  <div class="tile-category">{skill.category}</div>
+                  <div class="tile-description">{skill.description}</div>
+                </div>
+                <div class="tile-glitch"></div>
               </div>
-              <div class="tile-glitch"></div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
       <!-- Stats Footer -->
@@ -227,7 +229,7 @@ const allSkills = skills.flatMap(category =>
 
 <style>
   .skill-matrix {
-    min-height: 700px;
+    height: 1000px;
     padding: 0;
     background: #131613;
     border: 1px solid rgba(86, 182, 194, 0.2);
@@ -235,6 +237,8 @@ const allSkills = skills.flatMap(category =>
     position: relative;
     overflow: hidden;
     font-family: 'Geist Mono', monospace;
+    display: flex;
+    flex-direction: column;
   }
 
   /* Terminal Header */
@@ -285,7 +289,7 @@ const allSkills = skills.flatMap(category =>
   .layout-container {
     display: flex;
     flex: 1;
-    min-height: 600px;
+    overflow: hidden;
   }
 
   /* Left Sidebar - Categories */
@@ -430,13 +434,36 @@ const allSkills = skills.flatMap(category =>
     transform: scale(1.2);
   }
 
+  /* Skill Grid Container - Scrollable Area */
+  .skill-grid-container {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 1rem;
+  }
+
+  .skill-grid-container::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .skill-grid-container::-webkit-scrollbar-track {
+    background: rgba(19, 22, 19, 0.5);
+  }
+
+  .skill-grid-container::-webkit-scrollbar-thumb {
+    background: rgba(86, 182, 194, 0.3);
+    border-radius: 4px;
+  }
+
+  .skill-grid-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(86, 182, 194, 0.5);
+  }
+
   /* Skill Grid - Smaller Cards */
   .skill-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     gap: 0.75rem;
-    padding: 1rem;
-    flex: 1;
   }
 
   .skill-tile {
@@ -688,17 +715,20 @@ const allSkills = skills.flatMap(category =>
   /* Responsive */
   @media (max-width: 768px) {
     .skill-matrix {
-      min-height: 600px;
+      height: 1000px;
     }
 
     .categories-sidebar {
       width: 200px;
     }
 
+    .skill-grid-container {
+      padding: 0.75rem;
+    }
+
     .skill-grid {
       grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
       gap: 0.5rem;
-      padding: 0.75rem;
     }
 
     .tile-name {
@@ -720,26 +750,112 @@ const allSkills = skills.flatMap(category =>
   }
 
   @media (max-width: 640px) {
+    .skill-matrix {
+      height: 1000px;
+    }
+
     .layout-container {
       flex-direction: column;
+      max-height: 100%;
     }
 
     .categories-sidebar {
       width: 100%;
-      height: 150px;
+      height: auto;
+      flex-shrink: 0;
       border-right: none;
       border-bottom: 1px solid rgba(86, 182, 194, 0.1);
+    }
+
+    .sidebar-header {
+      padding: 0.75rem 1rem;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .sidebar-title {
+      font-size: 0.7rem;
+      margin-bottom: 0;
+    }
+
+    .sidebar-stats {
+      font-size: 0.6rem;
     }
 
     .categories-list {
       display: flex;
       gap: 0.5rem;
-      padding: 0.5rem;
+      padding: 0.75rem 1rem 1rem;
       overflow-x: auto;
+      flex-wrap: nowrap;
+    }
+
+    .categories-list::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    .categories-list::-webkit-scrollbar-track {
+      background: rgba(19, 22, 19, 0.5);
+    }
+
+    .categories-list::-webkit-scrollbar-thumb {
+      background: rgba(86, 182, 194, 0.3);
+      border-radius: 2px;
     }
 
     .category-item {
-      min-width: 120px;
+      min-width: auto;
+      padding: 0.5rem 0.75rem;
+      margin-bottom: 0;
+      flex-shrink: 0;
+      display: inline-flex;
+      flex-direction: row;
+      gap: 0.5rem;
+      align-items: center;
+      background: rgba(40, 44, 52, 0.7);
+      border-radius: 6px;
+    }
+
+    .category-item:hover {
+      transform: none;
+    }
+
+    .category-indicator {
+      width: 6px;
+      height: 6px;
+      min-width: 6px;
+      min-height: 6px;
+    }
+
+    .category-info {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .category-name {
+      font-size: 0.7rem;
+      white-space: nowrap;
+      margin-bottom: 0;
+    }
+
+    .category-count {
+      font-size: 0.65rem;
+      opacity: 0.7;
+    }
+
+    .content-area {
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .skill-grid-container {
+      padding: 0.75rem;
+      overflow-y: auto;
     }
 
     .skill-grid {
@@ -748,6 +864,7 @@ const allSkills = skills.flatMap(category =>
 
     .content-header {
       padding: 0.75rem 1rem;
+      flex-shrink: 0;
     }
 
     .legend-header {
@@ -757,6 +874,10 @@ const allSkills = skills.flatMap(category =>
     .legend-dot {
       width: 10px;
       height: 10px;
+    }
+
+    .matrix-footer {
+      flex-shrink: 0;
     }
   }
 </style>
